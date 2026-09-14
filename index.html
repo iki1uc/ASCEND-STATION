@@ -3,18 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>◈ 3 · A81-AXIS · QI/IQQ/OCTA · PIPELINE 3/6/9/12 · SYS</title>
+<title>◈ BORG 7482 · WURMLOCH-KANZEL · ATEM ∘ ATOM · 16fach · MANA/AURA/ZEN</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   :root{
-    --bg:#04070e; --bg2:#0a101e; --bg3:#101828;
+    --bg:#02060a; --bg2:#06101c; --bg3:#0c1828;
     --fg:#c8d8e8; --dim:#5a7288; --dim2:#2a3644;
-    --green:#7ce0a8; --green2:#b0ffd8;
-    --cyan:#5fc8ff; --gold:#ffcc44; --violet:#b388ff;
-    --pink:#ff88b0; --red:#ff5a7a; --orange:#ffa040;
-    --axis-a:#ffcc44; --axis-m:#5fc8ff; --axis-t:#b388ff;
-    --line:rgba(140,180,220,0.08);
-    --line2:rgba(140,180,220,0.04);
+    --o2:#7ce0a8;
+    --co2:#ffcc44;
+    --h2o:#5fc8ff;
+    --atom:#b388ff;
+    --mana:#ff66c8;
+    --aura:#ffd93d;
+    --zen:#8cf0d0;
+    --patch:#ff8844;
+    --dispatch:#88aaff;
+    --matrix:#00ff41;
+    --worm:#ff3355;
+    --borg:#00e5ff;
+    --ascend:#e0c8ff;
+    --red:#ff5a7a;
+    --ok:#7ce0a8;
+    --warn:#ffcc44;
+    --err:#ff5a7a;
+    --line:rgba(120,200,180,0.08);
+    --line2:rgba(120,200,180,0.04);
     --mono:'Consolas','Courier New',monospace;
     --serif:'Yu Mincho','Hiragino Mincho ProN',serif;
   }
@@ -24,172 +37,125 @@
     font-family:var(--mono); font-size:12px;
   }
 
+  /* ═══ DESK ═══ */
   #desk{
     width:100vw; height:100vh;
     background:var(--bg);
     display:flex; flex-direction:column;
     overflow:hidden;
+    position:relative;
+  }
+  /* Matrix Rain Canvas */
+  #matrixCanvas{
+    position:absolute; inset:0;
+    z-index:0;
+    opacity:0.35;
+  }
+  /* Breathing radial glow */
+  #desk::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(ellipse at 50% 45%,
+      rgba(124,224,168,0.06) 0%,
+      rgba(179,136,255,0.03) 35%,
+      rgba(255,51,85,0.02) 60%,
+      transparent 80%);
+    animation:bgBreathe 8s ease-in-out infinite;
+    pointer-events:none;
+    z-index:1;
+  }
+  @keyframes bgBreathe{
+    0%,100%{transform:scale(1);opacity:.5;}
+    50%{transform:scale(1.1);opacity:1;}
   }
 
-  /* ── TOPBAR ──────────────────────── */
+  /* ── TOPBAR ── */
   #topbar{
-    height:28px;
-    background:linear-gradient(180deg,#0a101e,#04070e);
-    border-bottom:1px solid var(--line);
-    display:flex; align-items:center;
-    padding:0 12px;
-    font-size:11px; letter-spacing:1px;
-    gap:10px; flex-shrink:0;
-  }
-  #topbar .logo{
-    color:var(--green);
-    font-weight:bold; letter-spacing:3px;
-    font-family:var(--serif);
-    display:flex; align-items:center; gap:6px;
-  }
-  #topbar .logo b{color:var(--gold);}
-  #topbar .led{
-    display:inline-block;
-    width:8px; height:8px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 8px var(--green);
-    animation:ledPulse 1.6s ease-in-out infinite;
-  }
-  @keyframes ledPulse{
-    0%,100%{opacity:.5;}
-    50%{opacity:1;box-shadow:0 0 14px var(--green);}
-  }
-  #topbar .sep{width:1px;height:14px;background:var(--line);}
-  #topbar .stat{
-    color:var(--dim); font-size:10px;
-    display:flex; gap:12px;
-    margin-left:auto; align-items:center;
-  }
-  #topbar .stat b{color:var(--green);font-weight:bold;}
-  #topbar .stat b.cy{color:var(--cyan);}
-  #topbar .stat b.gd{color:var(--gold);}
-  #topbar .stat b.vi{color:var(--violet);}
-  #topbar .stat b.pk{color:var(--pink);}
-  #topbar #clock{color:var(--cyan);}
-
-  /* ── MAIN 3-COLS ─────────────────── */
-  #main{
-    flex:1;
-    display:grid;
-    grid-template-columns: 240px 1fr 280px;
-    overflow:hidden;
-    min-height:0;
-  }
-
-  /* ── TREE ────────────────────────── */
-  #tree{
-    background:var(--bg2);
-    border-right:1px solid var(--line);
-    overflow-y:auto;
-    padding:6px 0; font-size:11px;
-  }
-  #tree::-webkit-scrollbar{width:6px;}
-  #tree::-webkit-scrollbar-thumb{background:var(--line);}
-  .tree-hdr{
-    padding:6px 12px 4px;
-    color:var(--dim); font-size:9px;
-    letter-spacing:2px; text-transform:uppercase;
-    font-family:var(--serif);
-  }
-  .tree-item{
-    padding:4px 12px 4px 22px;
-    color:var(--fg); cursor:pointer;
-    display:flex; justify-content:space-between;
-    align-items:center; font-size:11px;
-    border-left:2px solid transparent;
-    transition:.15s; position:relative;
-  }
-  .tree-item::before{
-    content:'▸'; position:absolute;
-    left:8px; color:var(--dim2); font-size:9px;
-  }
-  .tree-item:hover{
-    background:rgba(124,224,168,0.06);
-    border-left-color:var(--green);
-  }
-  .tree-item.active{
-    background:rgba(124,224,168,0.1);
-    border-left-color:var(--green);
-    color:var(--green);
-  }
-  .tree-item .ind{color:var(--dim2);font-size:9px;}
-  .tree-item.on .ind{color:var(--green);}
-  .tree-item.green .ind{
-    color:var(--green);
-    animation:treePulse 1.4s infinite;
-  }
-  .tree-item.hot .ind{
-    color:var(--gold);
-    animation:treePulse 1.4s infinite;
-  }
-  @keyframes treePulse{0%,100%{opacity:.4;}50%{opacity:1;}}
-
-  /* ── WORK ────────────────────────── */
-  #work{
-    display:flex; flex-direction:column;
-    overflow:hidden;
-    background:var(--bg); min-height:0;
-  }
-  #workHdr{
-    height:26px;
-    background:var(--bg2);
+    height:32px;
+    background:linear-gradient(180deg,#06101c,#02060a);
     border-bottom:1px solid var(--line);
     display:flex; align-items:center;
     padding:0 14px;
-    font-size:10px; letter-spacing:1.5px;
-    color:var(--green);
-    text-transform:uppercase;
+    font-size:11px; letter-spacing:1px;
     gap:12px; flex-shrink:0;
-    font-family:var(--serif);
+    position:relative; z-index:5;
   }
-  #workHdr .path{
-    color:var(--dim); font-size:10px;
-    letter-spacing:0; font-family:var(--mono);
-  }
-  #workHdr .path b{color:var(--green);}
-  #workHdr .status-tag{
-    margin-left:auto;
-    font-size:9px;
-    color:var(--green);
-    background:rgba(124,224,168,0.1);
-    padding:1px 8px;
-    border-radius:3px;
-    letter-spacing:1.5px;
-    font-family:var(--mono);
+  #topbar .logo{
+    color:var(--borg);
     font-weight:bold;
-    box-shadow:0 0 8px rgba(124,224,168,0.4);
+    letter-spacing:3px;
+    font-family:var(--serif);
+    display:flex; align-items:center; gap:8px;
+    text-shadow:0 0 10px var(--borg);
   }
-  #workBody{
-    flex:1;
-    padding:10px;
-    overflow-y:auto;
-    display:grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap:8px; align-content:start;
+  #topbar .logo b{color:var(--worm); text-shadow:0 0 10px var(--worm);}
+  #topbar .logo .eye{
+    display:inline-block;
+    width:10px; height:10px;
+    border-radius:50%;
+    background:var(--borg);
+    box-shadow:0 0 12px var(--borg);
+    animation:eyePulse 3s ease-in-out infinite;
   }
-  #workBody::-webkit-scrollbar{width:8px;}
-  #workBody::-webkit-scrollbar-thumb{background:var(--line);}
+  @keyframes eyePulse{
+    0%,100%{transform:scale(0.9);box-shadow:0 0 8px var(--borg);}
+    50%{transform:scale(1.4);box-shadow:0 0 22px var(--borg),0 0 44px rgba(0,229,255,.5);}
+  }
+  #topbar .sep{width:1px;height:16px;background:var(--line);}
+  #topbar .path{color:var(--dim); font-size:10px; letter-spacing:2px;}
+  #topbar .stat{
+    color:var(--dim);
+    font-size:10px;
+    display:flex; gap:12px;
+    margin-left:auto; align-items:center;
+    flex-wrap:wrap;
+  }
+  #topbar .stat b{font-weight:bold;}
+  #topbar .stat b.o2{color:var(--o2);}
+  #topbar .stat b.co2{color:var(--co2);}
+  #topbar .stat b.h2o{color:var(--h2o);}
+  #topbar .stat b.atom{color:var(--atom);}
+  #topbar .stat b.mana{color:var(--mana);}
+  #topbar .stat b.aura{color:var(--aura);}
+  #topbar .stat b.zen{color:var(--zen);}
+  #topbar .stat b.ok{color:var(--ok);}
+  #topbar .stat b.borg{color:var(--borg);}
+  #topbar .stat b.worm{color:var(--worm);}
+  #topbar #clock{color:var(--h2o);}
 
+  /* ── MAIN 3 COLS ── */
+  #main{
+    flex:1;
+    display:grid;
+    grid-template-columns: 320px 1fr 320px;
+    overflow:hidden;
+    min-height:0;
+    position:relative;
+    z-index:2;
+  }
+  @media(max-width:1280px){
+    #main{grid-template-columns: 1fr 1fr;}
+  }
+  @media(max-width:840px){
+    #main{grid-template-columns:1fr;}
+  }
+
+  /* ── PANEL Base ── */
   .panel{
-    background:var(--bg2);
+    background:rgba(6,16,28,0.85);
     border:1px solid var(--line);
-    border-radius:5px;
+    border-radius:6px;
     padding:10px 12px;
-    min-width:0; position:relative;
+    margin:8px 8px 0 8px;
+    position:relative;
+    overflow:hidden;
+    backdrop-filter:blur(3px);
   }
-  .panel.green{
-    border-color:rgba(124,224,168,0.25);
-    box-shadow:0 0 10px rgba(124,224,168,0.06) inset;
-  }
+  .panel:last-child{margin-bottom:8px;}
   .panel h3{
     font-size:10px; letter-spacing:1.8px;
-    color:var(--green);
+    color:var(--o2);
     text-transform:uppercase;
     margin-bottom:8px;
     padding-bottom:5px;
@@ -199,333 +165,424 @@
     font-family:var(--serif); font-weight:normal;
   }
   .panel h3 .badge{
-    font-size:9px; color:var(--green);
+    font-size:9px; color:var(--o2);
     background:rgba(124,224,168,0.08);
-    padding:1px 6px; border-radius:3px;
+    padding:1px 7px; border-radius:3px;
     letter-spacing:0.5px;
     font-family:var(--mono);
-    box-shadow:0 0 6px rgba(124,224,168,0.2);
+    font-weight:bold;
   }
-  .panel h3 .badge.warn{color:var(--gold);}
-  .panel h3 .badge.cy{color:var(--cyan);}
-  .panel h3 .badge.vi{color:var(--violet);}
+  .panel h3 .badge.ok{color:var(--ok);background:rgba(124,224,168,0.12);}
+  .panel h3 .badge.warn{color:var(--warn);background:rgba(255,204,68,0.1);}
+  .panel h3 .badge.err{color:var(--err);background:rgba(255,90,122,0.1);}
+  .panel h3 .badge.atom{color:var(--atom);background:rgba(179,136,255,0.1);}
+  .panel h3 .badge.mana{color:var(--mana);background:rgba(255,102,200,0.1);}
+  .panel h3 .badge.borg{color:var(--borg);background:rgba(0,229,255,0.1);}
+  .panel h3 .badge.worm{color:var(--worm);background:rgba(255,51,85,0.1);}
+  .panel h3 .badge.h2o{color:var(--h2o);background:rgba(95,200,255,0.1);}
+  .panel h3 .badge.co2{color:var(--co2);background:rgba(255,204,68,0.1);}
+  .panel h3 .badge.ascend{color:var(--ascend);background:rgba(224,200,255,0.1);}
 
-  /* ── KERN-STRIP (CPU·GPU·RAM·TMP) ── */
-  #kernStrip{
-    grid-column:1 / -1;
-    display:grid;
-    grid-template-columns: repeat(4,1fr);
-    gap:6px;
-  }
-  @media(max-width:1000px){
-    #kernStrip{grid-template-columns:1fr 1fr;}
-  }
-  .kern{
-    background:var(--bg2);
-    border:1px solid rgba(124,224,168,0.15);
-    border-radius:5px;
-    padding:8px 10px;
-    position:relative;
-    overflow:hidden;
-    transition:.25s;
-  }
-  .kern::before{
-    content:'';
-    position:absolute;
-    top:0; left:0; right:0;
-    height:1px;
-    background:linear-gradient(90deg,transparent,var(--green),transparent);
-    animation:scanLine 3s linear infinite;
-  }
-  @keyframes scanLine{
-    0%{opacity:0;}
-    50%{opacity:1;}
-    100%{opacity:0;}
-  }
-  .kern .hd{
-    display:flex; justify-content:space-between;
-    align-items:center;
-    font-family:var(--serif);
-    letter-spacing:1.5px;
-    font-size:10px;
-    margin-bottom:5px;
-    color:var(--green);
-  }
-  .kern .hd .led{
-    width:6px;height:6px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 8px var(--green);
-    animation:ledPulse 1.6s infinite;
-  }
-  .kern .rows{
-    display:grid; grid-template-columns:1fr 1fr;
-    gap:2px 8px; font-size:9.5px;
-  }
-  .kern .row{
-    display:flex; justify-content:space-between;
-    border-bottom:1px dashed var(--line2);
-    padding:1px 0;
-  }
-  .kern .row .k{color:var(--dim);}
-  .kern .row .v{color:var(--green);font-weight:bold;}
-  .kern .bar{
-    height:3px; background:#0a1420;
-    border-radius:2px; overflow:hidden;
-    margin-top:6px;
-  }
-  .kern .bar .f{
-    height:100%; width:100%;
-    background:linear-gradient(90deg,#1a3a2a,var(--green));
-    transition:width .35s;
-  }
-
-  /* ── 9×9 MATRIX ─────────────────── */
-  #matrixWrap{
+  /* ── COLUMNS ── */
+  #leftCol, #centerCol, #rightCol{
     display:flex; flex-direction:column;
-    align-items:center; gap:8px;
+    overflow-y:auto;
+    min-height:0;
   }
-  #matrix9{
-    display:grid;
-    grid-template-columns:repeat(9,1fr);
-    grid-template-rows:repeat(9,1fr);
-    gap:2px;
-    aspect-ratio:1;
-    background:#03060c;
-    padding:6px;
-    border-radius:8px;
-    border:1px solid rgba(124,224,168,0.2);
-    width:100%;
-    max-width:340px;
-    box-shadow:0 0 20px rgba(124,224,168,0.08) inset;
-  }
-  .m9{
-    background:rgba(16,24,40,0.6);
-    border-radius:2px;
-    display:flex; align-items:center;
-    justify-content:center;
-    font-size:7.5px; color:#3a4a5a;
-    transition:all .25s;
-    cursor:pointer;
-    font-weight:bold;
-  }
-  .m9:hover{
-    transform:scale(1.15);
-    z-index:3;
-    border:1px solid var(--green);
-  }
-  .m9.core{
-    background:rgba(124,224,168,0.2);
-    color:var(--green2);
-    box-shadow:inset 0 0 8px rgba(124,224,168,0.4);
-  }
-  .m9.active{
-    background:rgba(124,224,168,0.35);
-    color:#fff;
-    box-shadow:0 0 10px rgba(124,224,168,0.6);
-  }
-  .m9.axisA{background:rgba(255,204,68,0.2);color:var(--gold);}
-  .m9.axisM{background:rgba(95,200,255,0.2);color:var(--cyan);}
-  .m9.axisT{background:rgba(179,136,255,0.2);color:var(--violet);}
+  #leftCol::-webkit-scrollbar,
+  #centerCol::-webkit-scrollbar,
+  #rightCol::-webkit-scrollbar{width:6px;}
+  #leftCol::-webkit-scrollbar-thumb,
+  #centerCol::-webkit-scrollbar-thumb,
+  #rightCol::-webkit-scrollbar-thumb{background:var(--line);}
 
-  /* ── PIPELINE ────────────────────── */
-  #pipeWrap{
+  /* ── BORG STATUS PANEL ── */
+  .borg-row{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:6px;
-  }
-  @media(max-width:900px){
-    #pipeWrap{grid-template-columns:1fr 1fr;}
-  }
-  .pipe{
-    background:var(--bg3);
-    border:1px solid rgba(124,224,168,0.15);
-    border-radius:5px;
-    padding:8px 6px;
-    text-align:center;
-    cursor:pointer;
-    transition:.25s;
-    position:relative;
-  }
-  .pipe:hover{
-    border-color:var(--green);
-    box-shadow:0 0 12px rgba(124,224,168,0.25);
-  }
-  .pipe.active{
-    border-color:var(--green);
-    background:rgba(124,224,168,0.08);
-    box-shadow:0 0 16px rgba(124,224,168,0.4);
-  }
-  .pipe .num{
-    font-family:var(--serif);
-    font-size:24px;
-    color:var(--green);
-    font-weight:bold;
-    letter-spacing:1px;
-    text-shadow:0 0 12px rgba(124,224,168,0.5);
-  }
-  .pipe .lbl{
-    font-size:9px; color:var(--dim);
-    letter-spacing:1.5px;
-    margin-top:3px;
-  }
-  .pipe .val{
-    font-size:9px; color:var(--green2);
-    font-weight:bold;
-    margin-top:4px;
-  }
-
-  /* ── ACHSEN ──────────────────────── */
-  .axis-grid{
-    display:grid; grid-template-columns:1fr 1fr 1fr;
-    gap:6px;
-  }
-  .axis{
-    background:var(--bg3);
-    border:1px solid var(--line);
-    border-radius:5px;
-    padding:8px 10px;
-    position:relative;
-    overflow:hidden;
-  }
-  .axis.A{border-left:3px solid var(--axis-a);}
-  .axis.M{border-left:3px solid var(--axis-m);}
-  .axis.T{border-left:3px solid var(--axis-t);}
-  .axis .nm{
-    font-family:var(--serif);
-    font-size:12px; letter-spacing:2px;
-    margin-bottom:5px;
-  }
-  .axis.A .nm{color:var(--axis-a);}
-  .axis.M .nm{color:var(--axis-m);}
-  .axis.T .nm{color:var(--axis-t);}
-  .axis .row{
-    display:flex; justify-content:space-between;
-    font-size:9.5px; padding:1.5px 0;
+    grid-template-columns: 1fr auto;
+    gap:8px;
+    align-items:center;
+    padding:4px 0;
     border-bottom:1px dashed var(--line2);
+    font-size:10.5px;
   }
-  .axis .row:last-child{border-bottom:none;}
-  .axis .row .k{color:var(--dim);}
-  .axis .row .v{color:var(--green);font-weight:bold;}
+  .borg-row:last-child{border-bottom:none;}
+  .borg-row .k{color:var(--dim); letter-spacing:1px; font-size:9.5px;}
+  .borg-row .v{color:var(--borg); font-weight:bold; font-size:10.5px; text-shadow:0 0 6px var(--borg);}
+  .borg-row .v.worm{color:var(--worm); text-shadow:0 0 6px var(--worm);}
+  .borg-row .v.ascend{color:var(--ascend); text-shadow:0 0 6px var(--ascend);}
+  .borg-row .v.ok{color:var(--ok); text-shadow:0 0 6px var(--ok);}
 
-  /* ── STATION-MESSUNGEN ───────────── */
-  .station-row{
+  /* ── KERNEL PANEL ── */
+  .kern-row{
     display:grid;
-    grid-template-columns: 100px 1fr 60px 55px;
-    gap:6px;
+    grid-template-columns: 90px 1fr 55px;
+    gap:8px;
     align-items:center;
     padding:5px 0;
     border-bottom:1px dashed var(--line2);
-    font-size:10px;
+    font-size:10.5px;
   }
-  .station-row:last-child{border-bottom:none;}
-  .station-row .nm{
-    color:var(--fg);
-    font-weight:bold;
-    letter-spacing:0.5px;
-    display:flex; align-items:center; gap:4px;
+  .kern-row:last-child{border-bottom:none;}
+  .kern-row .k{color:var(--dim); font-size:9.5px; letter-spacing:1px; font-weight:bold;}
+  .kern-row .bar{
+    height:5px; background:var(--bg3);
+    border-radius:2px; overflow:hidden;
   }
-  .station-row .nm .dot{
-    width:6px; height:6px;
+  .kern-row .bar .f{height:100%; transition:width .35s;}
+  .kern-row .bar .f.dispatch{background:linear-gradient(90deg,#2a3a5a,var(--dispatch));}
+  .kern-row .bar .f.patch{background:linear-gradient(90deg,#5a3a1a,var(--patch));}
+  .kern-row .bar .f.kernel{background:linear-gradient(90deg,#1a3a2a,var(--o2));}
+  .kern-row .bar .f.cache{background:linear-gradient(90deg,#2a1a3a,var(--atom));}
+  .kern-row .v{text-align:right; font-weight:bold; font-size:10px;}
+  .kern-row .v.dispatch{color:var(--dispatch);}
+  .kern-row .v.patch{color:var(--patch);}
+  .kern-row .v.kernel{color:var(--o2);}
+  .kern-row .v.cache{color:var(--atom);}
+
+  /* ── 16FACH VERIFY (4×4 grid) ── */
+  #verifyGrid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:3px;
+    margin-top:4px;
+  }
+  .vcell{
+    background:var(--bg3);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:6px 2px;
+    text-align:center;
+    font-size:8px;
+    cursor:pointer;
+    transition:.25s;
+    min-height:48px;
+    display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+  }
+  .vcell .ic{font-size:12px; margin-bottom:2px; font-weight:bold;}
+  .vcell .nm{font-size:7.5px; letter-spacing:0.5px; color:var(--dim);}
+  .vcell .dbl{font-size:7px; color:var(--dim2); margin-top:1px; letter-spacing:1px;}
+  .vcell.pass{background:rgba(124,224,168,0.12); border-color:var(--o2); color:var(--o2);}
+  .vcell.pass .ic{color:var(--o2); text-shadow:0 0 6px var(--o2);}
+  .vcell.pass .nm{color:var(--o2);}
+  .vcell.warn{background:rgba(255,204,68,0.1); border-color:var(--warn); color:var(--warn);}
+  .vcell.warn .ic{color:var(--warn);}
+  .vcell.warn .nm{color:var(--warn);}
+  .vcell.fail{background:rgba(255,90,122,0.12); border-color:var(--err); color:var(--err);}
+  .vcell.fail .ic{color:var(--err);}
+  .vcell.fail .nm{color:var(--err);}
+  .vcell.checking{
+    border-color:var(--dispatch);
+    animation:vcellCheck .6s ease-in-out;
+  }
+  @keyframes vcellCheck{
+    0%,100%{box-shadow:0 0 0 rgba(136,170,255,0);}
+    50%{box-shadow:0 0 12px rgba(136,170,255,0.6);}
+  }
+
+  /* ── ATEM / CORE (center) ── */
+  #atemPanel{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px 12px;
+    min-height:340px;
+    position:relative;
+  }
+  #atemWrap{
+    position:relative;
+    width:300px; height:300px;
+  }
+  #atemWrap svg{position:absolute; inset:0; overflow:visible;}
+  #atemCore{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:120px; height:120px;
     border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 6px var(--green);
-    animation:ledPulse 2s infinite;
+    background:radial-gradient(circle at 40% 35%,
+      #ffffff 0%, #e0c8ff 10%, #b388ff 30%, #7ce0a8 55%, #5fc8ff 75%, #1a0838 100%);
+    box-shadow:
+      0 0 50px rgba(179,136,255,0.7),
+      0 0 100px rgba(124,224,168,0.5),
+      0 0 150px rgba(0,229,255,0.3),
+      inset 0 0 40px rgba(255,255,255,0.4);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif);
+    font-size:42px;
+    color:#0a2a20;
+    font-weight:bold;
+    text-shadow:0 0 16px rgba(255,255,255,0.8);
+    transition:transform .15s;
+    z-index:3;
+    animation:atemCoreBreathe 4s ease-in-out infinite;
   }
-  .station-row .bar{
-    height:5px;
+  @keyframes atemCoreBreathe{
+    0%,100%{transform:translate(-50%,-50%) scale(1);}
+    50%{transform:translate(-50%,-50%) scale(1.07);}
+  }
+  #atemGlyph{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    font-size:36px;
+    font-weight:bold;
+    color:#fff;
+    text-shadow:
+      0 0 18px rgba(255,255,255,0.95),
+      0 0 36px rgba(179,136,255,0.8),
+      0 0 60px rgba(124,224,168,0.6);
+    z-index:4;
+    font-family:var(--mono);
+    letter-spacing:-1px;
+  }
+  #atemLabel{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    font-size:12px;
+    color:#fff;
+    font-weight:bold;
+    text-shadow:0 0 10px rgba(0,0,0,0.9), 0 0 20px var(--borg);
+    z-index:5;
+    font-family:var(--serif);
+    letter-spacing:4px;
+    margin-top:46px;
+    text-align:center;
+    width:180px;
+  }
+  #atemDual{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    font-size:9px;
+    color:var(--borg);
+    letter-spacing:3px;
+    z-index:5;
+    margin-top:66px;
+    text-align:center;
+    width:180px;
+    font-family:var(--mono);
+    opacity:0.8;
+  }
+
+  /* ── ELEMENT CYCLE ── */
+  #cycleGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+  }
+  .elem{
+    background:var(--bg3);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:8px 10px;
+    transition:.25s;
+    position:relative;
+    overflow:hidden;
+  }
+  .elem .hdr{
+    display:flex; justify-content:space-between;
+    align-items:center;
+    font-size:10px; font-weight:bold;
+    letter-spacing:1px; margin-bottom:5px;
+  }
+  .elem .formula{
+    font-size:16px; font-weight:bold;
+    font-family:var(--serif);
+    letter-spacing:2px; margin-bottom:4px;
+  }
+  .elem .desc{font-size:9px; color:var(--dim); line-height:1.4;}
+  .elem .val{font-size:11px; font-weight:bold; margin-top:5px;}
+  .elem.atom{border-left:3px solid var(--atom);}
+  .elem.atom .hdr{color:var(--atom);}
+  .elem.atom .formula{color:var(--atom);}
+  .elem.atom .val{color:var(--atom);}
+  .elem.co2{border-left:3px solid var(--co2);}
+  .elem.co2 .hdr{color:var(--co2);}
+  .elem.co2 .formula{color:var(--co2);}
+  .elem.co2 .val{color:var(--co2);}
+  .elem.o2{border-left:3px solid var(--o2);}
+  .elem.o2 .hdr{color:var(--o2);}
+  .elem.o2 .formula{color:var(--o2);}
+  .elem.o2 .val{color:var(--o2);}
+  .elem.h2o{border-left:3px solid var(--h2o);}
+  .elem.h2o .hdr{color:var(--h2o);}
+  .elem.h2o .formula{color:var(--h2o);}
+  .elem.h2o .val{color:var(--h2o);}
+
+  /* ── WURMLOCH ── */
+  #wormPanel{position:relative; overflow:hidden;}
+  #wormCanvas{
+    position:absolute; inset:0;
+    opacity:0.5;
+    z-index:0;
+  }
+  #wormPanel .content{position:relative; z-index:1;}
+  .worm-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:8px;
+    padding:4px 0;
+    border-bottom:1px dashed var(--line2);
+    font-size:10.5px;
+  }
+  .worm-row:last-child{border-bottom:none;}
+  .worm-row .k{color:var(--dim); letter-spacing:1px; font-size:9.5px;}
+  .worm-row .v{color:var(--worm); font-weight:bold; text-shadow:0 0 6px var(--worm);}
+
+  /* ── NARRATIVE STREAM ── */
+  #narrPanel{padding:0;}
+  #narrPanel h3{padding:10px 12px 5px; margin-bottom:0;}
+  #narrStream{
+    background:#02060a;
+    padding:10px 14px;
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:12px;
+    line-height:1.7;
+    color:#b8d8c8;
+    max-height:180px;
+    overflow-y:auto;
+    border-radius:0 0 6px 6px;
+  }
+  #narrStream::-webkit-scrollbar{width:5px;}
+  #narrStream::-webkit-scrollbar-thumb{background:var(--line);}
+  #narrStream .nl{
+    padding:4px 0;
+    display:flex; gap:8px;
+    animation:narrIn .5s ease-out;
+  }
+  @keyframes narrIn{from{opacity:0;transform:translateX(-6px);}to{opacity:1;transform:none;}}
+  #narrStream .nl .ts{
+    color:var(--dim2);
+    font-family:var(--mono);
+    font-style:normal;
+    font-size:9px;
+    flex-shrink:0;
+    padding-top:2px;
+  }
+  #narrStream .nl .msg{flex:1;}
+  #narrStream .nl .msg.o2{color:var(--o2);}
+  #narrStream .nl .msg.co2{color:var(--co2);}
+  #narrStream .nl .msg.h2o{color:var(--h2o);}
+  #narrStream .nl .msg.atom{color:var(--atom);}
+  #narrStream .nl .msg.mana{color:var(--mana);}
+  #narrStream .nl .msg.aura{color:var(--aura);}
+  #narrStream .nl .msg.zen{color:var(--zen);}
+  #narrStream .nl .msg.ok{color:var(--ok);}
+  #narrStream .nl .msg.borg{color:var(--borg);}
+  #narrStream .nl .msg.worm{color:var(--worm);}
+  #narrStream .nl .msg.ascend{color:var(--ascend);}
+
+  /* ── MANA / AURA / ZEN ── */
+  .maz-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:5px;
+  }
+  .maz{
+    background:var(--bg3);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:8px 6px;
+    text-align:center;
+    transition:.25s;
+    position:relative;
+  }
+  .maz .nm{
+    font-family:var(--serif);
+    font-size:10px;
+    letter-spacing:2px;
+    font-weight:bold;
+    margin-bottom:4px;
+  }
+  .maz .val{
+    font-size:16px;
+    font-weight:bold;
+    font-family:var(--mono);
+  }
+  .maz .bar{
+    height:3px;
     background:#0a1420;
     border-radius:2px;
     overflow:hidden;
-    position:relative;
+    margin-top:5px;
   }
-  .station-row .bar .f{
-    height:100%;
-    background:linear-gradient(90deg,#1a3a2a,var(--green));
-    transition:width .4s;
-  }
-  .station-row .st{
-    text-align:right;
-    color:var(--green);
-    font-weight:bold;
-    font-size:9.5px;
-  }
-  .station-row .val{
-    text-align:right;
-    color:var(--cyan);
-    font-weight:bold;
-  }
+  .maz .bar .f{height:100%; width:0; transition:width .5s;}
+  .maz.mana .nm{color:var(--mana);}
+  .maz.mana .val{color:var(--mana); text-shadow:0 0 8px var(--mana);}
+  .maz.mana .bar .f{background:linear-gradient(90deg,#3a0a2a,var(--mana));}
+  .maz.aura .nm{color:var(--aura);}
+  .maz.aura .val{color:var(--aura); text-shadow:0 0 8px var(--aura);}
+  .maz.aura .bar .f{background:linear-gradient(90deg,#3a2a0a,var(--aura));}
+  .maz.zen .nm{color:var(--zen);}
+  .maz.zen .val{color:var(--zen); text-shadow:0 0 8px var(--zen);}
+  .maz.zen .bar .f{background:linear-gradient(90deg,#0a3a2a,var(--zen));}
 
-  /* ── SYS-SPIEGEL (rechts) ────────── */
-  #sys{
-    background:var(--bg2);
-    border-left:1px solid var(--line);
-    overflow-y:auto;
-    padding:8px 10px;
-    font-size:10.5px;
-  }
-  #sys::-webkit-scrollbar{width:6px;}
-  #sys::-webkit-scrollbar-thumb{background:var(--line);}
-
-  .sys-blk{
-    background:var(--bg3);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:7px 9px;
-    margin-bottom:6px;
-    position:relative;
-  }
-  .sys-blk.green{
-    border-left:3px solid var(--green);
-    box-shadow:0 0 8px rgba(124,224,168,0.05) inset;
-  }
-  .sys-blk.puls::before{
-    content:'';
-    position:absolute; inset:-1px;
-    border-radius:4px;
-    background:linear-gradient(135deg,transparent,rgba(124,224,168,0.1),transparent);
-    pointer-events:none;
-    animation:shimmer 3s linear infinite;
-  }
-  @keyframes shimmer{
-    0%{opacity:.3;}50%{opacity:.8;}100%{opacity:.3;}
-  }
-  .sys-blk .h{
-    font-size:9px; letter-spacing:1.5px;
-    color:var(--dim);
-    text-transform:uppercase;
-    margin-bottom:5px;
-    display:flex; justify-content:space-between;
-    font-family:var(--serif);
-  }
-  .sys-blk .h .led{
-    width:6px;height:6px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 6px var(--green);
-    animation:ledPulse 1.8s infinite;
-  }
-  .sys-row{
-    display:flex; justify-content:space-between;
-    padding:1.5px 0;
+  /* ── CACHE ── */
+  .cache-row{
+    display:grid;
+    grid-template-columns:1fr 60px 50px;
+    gap:6px;
+    align-items:center;
+    padding:4px 0;
+    border-bottom:1px dashed var(--line2);
     font-size:10px;
   }
-  .sys-row .k{color:var(--dim);}
-  .sys-row .v{color:var(--fg);font-weight:bold;}
-  .sys-row .v.ok{color:var(--green);}
-  .sys-row .v.warn{color:var(--gold);}
-  .sys-row .v.err{color:var(--red);}
-  .sys-row .v.cy{color:var(--cyan);}
-  .sys-row .v.vi{color:var(--violet);}
-  .sys-row .v.pk{color:var(--pink);}
+  .cache-row:last-child{border-bottom:none;}
+  .cache-row .k{color:var(--fg); letter-spacing:0.5px;}
+  .cache-row .v{text-align:right; color:var(--atom); font-weight:bold; font-size:10px;}
+  .cache-row .st{text-align:right; font-size:9px; font-weight:bold;}
+  .cache-row .st.hit{color:var(--o2);}
+  .cache-row .st.miss{color:var(--warn);}
+  .cache-row .st.empty{color:var(--dim);}
 
-  /* ── CLI ─────────────────────────── */
+  /* ── RESULT ── */
+  #resultBox{
+    background:var(--bg3);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:10px 12px;
+    font-size:10.5px;
+    line-height:1.6;
+    font-family:var(--mono);
+    color:var(--fg);
+  }
+  #resultBox .line{
+    display:flex; justify-content:space-between;
+    padding:2px 0;
+    border-bottom:1px dashed var(--line2);
+  }
+  #resultBox .line:last-child{border-bottom:none;}
+  #resultBox .line .k{color:var(--dim);}
+  #resultBox .line .v{color:var(--o2); font-weight:bold;}
+  #resultBox .line.total{
+    border-top:2px solid rgba(124,224,168,0.2);
+    margin-top:6px;
+    padding-top:6px;
+    font-size:12px;
+  }
+  #resultBox .line.total .v{color:var(--co2); font-size:13px;}
+
+  /* ── DISPATCH/PATCH ── */
+  .sys-row{
+    display:flex; justify-content:space-between;
+    padding:2px 0;
+    font-size:10.5px;
+  }
+  .sys-row .k{color:var(--dim);}
+  .sys-row .v{font-weight:bold;}
+
+  /* ── CLI ── */
   #cli{
-    height:150px;
-    background:#02040a;
+    height:130px;
+    background:#02060a;
     border-top:1px solid var(--line);
     display:flex; flex-direction:column;
     flex-shrink:0;
+    position:relative; z-index:5;
   }
   #cliHdr{
     height:20px;
@@ -540,26 +597,26 @@
     font-family:var(--serif);
   }
   #cliHdr .tab{
-    color:var(--green); cursor:pointer;
+    color:var(--o2); cursor:pointer;
     letter-spacing:1.5px;
   }
   #cliHdr .tab.active{
-    color:var(--gold);
-    border-bottom:1px solid var(--gold);
+    color:var(--co2);
+    border-bottom:1px solid var(--co2);
     padding-bottom:1px;
   }
-  #cliHdr .green-tag{
+  #cliHdr .tag{
     margin-left:auto;
-    color:var(--green);
+    color:var(--borg);
     font-size:9px; letter-spacing:1px;
     display:flex; align-items:center; gap:5px;
   }
-  #cliHdr .green-tag .led{
-    width:5px;height:5px;
+  #cliHdr .tag .led{
+    width:6px; height:6px;
     border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 6px var(--green);
-    animation:ledPulse 1.6s infinite;
+    background:var(--borg);
+    box-shadow:0 0 6px var(--borg);
+    animation:eyePulse 3s ease-in-out infinite;
   }
   #log{
     flex:1;
@@ -572,14 +629,22 @@
   }
   #log::-webkit-scrollbar{width:6px;}
   #log::-webkit-scrollbar-thumb{background:var(--line);}
-  #log .ln{white-space:pre-wrap;word-break:break-all;}
-  #log .ts{color:var(--dim2);margin-right:6px;}
-  #log .ok{color:var(--green);}
-  #log .warn{color:var(--gold);}
-  #log .err{color:var(--red);}
-  #log .info{color:var(--cyan);}
-  #log .vio{color:var(--violet);}
-  #log .pk{color:var(--pink);}
+  #log .ln{white-space:pre-wrap; word-break:break-all;}
+  #log .ts{color:var(--dim2); margin-right:6px;}
+  #log .ok{color:var(--o2);}
+  #log .warn{color:var(--warn);}
+  #log .err{color:var(--err);}
+  #log .info{color:var(--h2o);}
+  #log .atom{color:var(--atom);}
+  #log .mana{color:var(--mana);}
+  #log .aura{color:var(--aura);}
+  #log .zen{color:var(--zen);}
+  #log .dispatch{color:var(--dispatch);}
+  #log .patch{color:var(--patch);}
+  #log .co2{color:var(--co2);}
+  #log .borg{color:var(--borg);}
+  #log .worm{color:var(--worm);}
+  #log .ascend{color:var(--ascend);}
 
   #cliInput{
     height:24px;
@@ -587,15 +652,18 @@
     border-top:1px solid var(--line);
     display:flex; align-items:center;
     padding:0 12px;
-    font-size:11px; flex-shrink:0;
+    font-size:11px;
+    flex-shrink:0;
   }
   #cliInput .prompt{
-    color:var(--green); margin-right:6px;
+    color:var(--borg);
+    margin-right:6px;
     font-weight:bold;
   }
   #cliInput input{
     flex:1;
-    background:transparent; border:none;
+    background:transparent;
+    border:none;
     color:var(--fg);
     font-family:var(--mono);
     font-size:11px;
@@ -603,7 +671,7 @@
   }
   #cliInput input::placeholder{color:var(--dim2);}
 
-  /* ── BOOT ────────────────────────── */
+  /* ── BOOT OVERLAY ── */
   #boot{
     position:fixed; inset:0;
     background:#000;
@@ -612,46 +680,50 @@
     gap:14px;
     z-index:9999;
     font-size:12px;
-    color:var(--green);
+    color:var(--borg);
     letter-spacing:2px;
-    transition:opacity .6s;
+    transition:opacity .7s;
   }
-  #boot.done{opacity:0;pointer-events:none;}
+  #boot.done{opacity:0; pointer-events:none;}
   #boot .logo{
     font-size:44px;
-    color:var(--green);
-    letter-spacing:10px;
+    color:var(--borg);
+    letter-spacing:12px;
     font-weight:bold;
     text-shadow:
-      0 0 30px rgba(124,224,168,0.7),
-      0 0 60px rgba(95,200,255,0.5);
-    animation:logoPulse 2s ease-in-out infinite;
+      0 0 30px rgba(0,229,255,0.8),
+      0 0 60px rgba(179,136,255,0.6),
+      0 0 90px rgba(255,51,85,0.4);
+    animation:logoBreathe 4s ease-in-out infinite;
     font-family:var(--serif);
   }
-  @keyframes logoPulse{
-    0%,100%{transform:scale(1);filter:brightness(1);}
-    50%{transform:scale(1.03);filter:brightness(1.3);}
+  @keyframes logoBreathe{
+    0%,100%{transform:scale(1); filter:brightness(1);}
+    50%{transform:scale(1.04); filter:brightness(1.35);}
   }
   #boot .sub{
-    color:var(--cyan);
+    color:var(--atom);
     font-size:11px;
-    letter-spacing:6px;
+    letter-spacing:8px;
     font-family:var(--serif);
   }
   #boot .lines{
-    width:560px; max-width:82%;
+    width:620px; max-width:84%;
     font-size:11px;
     line-height:1.7;
     text-align:left;
-    color:var(--green);
+    color:var(--borg);
     letter-spacing:0.5px;
     font-family:var(--mono);
   }
-  #boot .lines b{color:var(--gold);}
+  #boot .lines b{color:var(--co2);}
   #boot .lines .dim{color:var(--dim2);}
-  #boot .lines .cy{color:var(--cyan);}
+  #boot .lines .atom{color:var(--atom);}
+  #boot .lines .h2o{color:var(--h2o);}
+  #boot .lines .worm{color:var(--worm);}
+  #boot .lines .ascend{color:var(--ascend);}
   #boot .progress{
-    width:560px; max-width:82%;
+    width:620px; max-width:84%;
     height:3px;
     background:var(--bg3);
     border-radius:2px;
@@ -659,10 +731,11 @@
   }
   #boot .progress .bar{
     height:100%; width:0%;
-    background:linear-gradient(90deg,var(--green),var(--cyan),var(--gold));
+    background:linear-gradient(90deg,var(--borg),var(--atom),var(--o2),var(--co2));
     transition:width .3s;
   }
 
+  /* ── BUTTONS ── */
   .mbtn{
     background:var(--bg3);
     color:var(--fg);
@@ -675,334 +748,311 @@
     cursor:pointer;
     transition:.15s;
     text-transform:uppercase;
-    flex:1; min-width:60px;
+    flex:1;
+    min-width:60px;
   }
   .mbtn:hover{
-    border-color:var(--green);
+    border-color:var(--o2);
     background:rgba(124,224,168,0.1);
-    color:var(--green);
+    color:var(--o2);
   }
-  .mbtn.g{border-color:rgba(124,224,168,0.4);color:var(--green);}
-  .mbtn.g:hover{background:rgba(124,224,168,0.15);border-color:var(--green);color:#fff;}
-  .mbtn.c{border-color:rgba(95,200,255,0.4);color:var(--cyan);}
-  .mbtn.c:hover{background:rgba(95,200,255,0.15);border-color:var(--cyan);color:#fff;}
+  .mbtn.o2{border-color:rgba(124,224,168,0.4); color:var(--o2);}
+  .mbtn.o2:hover{background:rgba(124,224,168,0.15); border-color:var(--o2); color:#fff;}
+  .mbtn.co2{border-color:rgba(255,204,68,0.4); color:var(--co2);}
+  .mbtn.co2:hover{background:rgba(255,204,68,0.15); border-color:var(--co2); color:#fff;}
+  .mbtn.h2o{border-color:rgba(95,200,255,0.4); color:var(--h2o);}
+  .mbtn.h2o:hover{background:rgba(95,200,255,0.15); border-color:var(--h2o); color:#fff;}
+  .mbtn.atom{border-color:rgba(179,136,255,0.4); color:var(--atom);}
+  .mbtn.atom:hover{background:rgba(179,136,255,0.15); border-color:var(--atom); color:#fff;}
+  .mbtn.borg{border-color:rgba(0,229,255,0.4); color:var(--borg);}
+  .mbtn.borg:hover{background:rgba(0,229,255,0.15); border-color:var(--borg); color:#fff;}
+  .mbtn.worm{border-color:rgba(255,51,85,0.4); color:var(--worm);}
+  .mbtn.worm:hover{background:rgba(255,51,85,0.15); border-color:var(--worm); color:#fff;}
 
-  @media(max-width:1100px){
-    #main{grid-template-columns: 200px 1fr 240px;}
-    #workBody{grid-template-columns:1fr;}
+  /* ── LOOP SELECTOR ── */
+  .loop-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4px;
   }
-  @media(max-width:820px){
-    #main{grid-template-columns:1fr;}
-    #tree, #sys{display:none;}
+  .loop-btn{
+    background:var(--bg3);
+    border:1px solid var(--line);
+    color:var(--dim);
+    padding:6px 4px;
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:1px;
+    cursor:pointer;
+    border-radius:3px;
+    transition:.2s;
+  }
+  .loop-btn:hover{
+    color:var(--borg);
+    border-color:var(--borg);
+    box-shadow:0 0 8px rgba(0,229,255,0.4);
+  }
+  .loop-btn.active{
+    color:var(--worm);
+    border-color:var(--worm);
+    box-shadow:0 0 12px rgba(255,51,85,0.6);
+    background:rgba(255,51,85,0.08);
+    text-shadow:0 0 6px var(--worm);
+  }
+
+  /* ── LIGHTSABER DIVIDER ── */
+  .lightsaber{
+    height:2px;
+    background:var(--patch);
+    margin:8px 0;
+    position:relative;
+    box-shadow:0 0 12px var(--patch), 0 0 24px rgba(255,136,68,0.6);
+    border-radius:2px;
+  }
+  .lightsaber::before{
+    content:'';
+    position:absolute;
+    left:0; top:-3px;
+    width:8px; height:8px;
+    background:#fff;
+    border-radius:50%;
+    box-shadow:0 0 16px #fff, 0 0 32px var(--patch);
+  }
+
+  @media(max-width:700px){
+    #topbar{padding:0 8px; font-size:9px;}
+    #topbar .logo{font-size:10px; letter-spacing:1px;}
+    #topbar .stat{display:none;}
+    .panel{padding:8px 10px; margin:6px 6px 0 6px;}
+    #atemWrap{width:220px; height:220px;}
+    #atemCore{width:90px; height:90px; font-size:28px;}
+    #atemGlyph{font-size:24px;}
+    #atemLabel{font-size:9px; margin-top:34px;}
+    #atemDual{display:none;}
   }
 </style>
 </head>
 <body>
 
-<!-- ═══ BOOT ═══ -->
+<!-- ═══ BOOT OVERLAY ═══ -->
 <div id="boot">
-  <div class="logo">◈ 3</div>
-  <div class="sub">A81 · QI · IQQ · OCTA · SYS</div>
+  <div class="logo">◈ BORG 7482</div>
+  <div class="sub">WURMLOCH · KANZEL · ATEM ∘ ATOM</div>
   <div class="lines" id="bootLines"></div>
   <div class="progress"><div class="bar" id="bootBar"></div></div>
 </div>
 
 <!-- ═══ DESK ═══ -->
 <div id="desk">
+  <canvas id="matrixCanvas"></canvas>
 
+  <!-- TOPBAR -->
   <div id="topbar">
     <span class="logo">
-      <span class="led"></span>
-      3<b>::A81-AXIS</b>
+      <span class="eye"></span>
+      BORG <b>7482</b> · WURMLOCH
     </span>
     <span class="sep"></span>
-    <span style="color:var(--dim);">/root/3 &gt; index.html</span>
+    <span class="path">/root/ascended &gt; wormhole.cockpit</span>
     <div class="stat">
-      <span>VITAL <b id="tVital">100%</b></span>
-      <span>BALANCE <b class="cy" id="tBal">1.00</b></span>
-      <span>DRIFT <b class="gd" id="tDrift">0.00</b></span>
-      <span>AXIS <b class="vi" id="tAxis">A·M·T</b></span>
-      <span>PIPE <b id="tPipe">12</b></span>
-      <span>FL76 <b id="tFl">76</b></span>
+      <span>O² <b class="o2" id="tO2">0%</b></span>
+      <span>CO² <b class="co2" id="tCO2">0%</b></span>
+      <span>H²O <b class="h2o" id="tH2O">0%</b></span>
+      <span>ATOM <b class="atom" id="tAtom">0%</b></span>
+      <span>MANA <b class="mana" id="tMana">0%</b></span>
+      <span>AURA <b class="aura" id="tAura">0%</b></span>
+      <span>ZEN <b class="zen" id="tZen">0%</b></span>
+      <span>BORG <b class="borg" id="tBorg">0%</b></span>
+      <span>WORM <b class="worm" id="tWorm">0%</b></span>
+      <span>VERIFY <b class="ok" id="tVerify">0/16</b></span>
       <span id="clock">--:--:--</span>
     </div>
   </div>
 
+  <!-- MAIN -->
   <div id="main">
 
-    <!-- TREE -->
-    <div id="tree">
-      <div class="tree-hdr">▸ Root · 3</div>
-      <div class="tree-item active green" data-st="index"><span>◈ index.html</span><span class="ind">★</span></div>
-      <div class="tree-item green" data-st="stage"><span>▤ stage.html</span><span class="ind">●</span></div>
+    <!-- ══ LEFT COL ══ -->
+    <div id="leftCol">
 
-      <div class="tree-hdr">▸ Kern · 3-Fold</div>
-      <div class="tree-item green" data-st="3hit"><span>3hit90.js</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="3x1"><span>3×1.js</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="3x3"><span>3×3.js</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="9x9"><span>9×9.js</span><span class="ind">●</span></div>
+      <!-- LOOP SELECTOR -->
+      <div class="panel">
+        <h3>◈ LOOP · SELECTOR <span class="badge borg" id="loopBadge">1.loop</span></h3>
+        <div class="loop-grid" id="loopGrid"></div>
+      </div>
 
-      <div class="tree-hdr">▸ 81 · A81-Matrix</div>
-      <div class="tree-item green" data-st="81"><span>▦ 81-matrix</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="a81axis"><span>◈ A81-Axis.js</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="maxis"><span>◈ M-Axis.js</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="taxis"><span>◈ T-Axis.js</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="engine"><span>⚙ engine.js</span><span class="ind">●</span></div>
+      <!-- KERNEL -->
+      <div class="panel">
+        <h3>◈ KERNEL · DISPATCH/PATCH <span class="badge ok" id="kernBadge">ready</span></h3>
+        <div id="kernRows"></div>
+        <div class="lightsaber"></div>
+      </div>
 
-      <div class="tree-hdr">▸ 9 · 9hoch9</div>
-      <div class="tree-item green" data-st="9hoch9"><span>◈ 9hoch9</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="ultranc9"><span>◈ ULTRA-NC9×9</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="ultranc3"><span>◈ ULTRA-NC3×3</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="pre99"><span>◈ PRE9×9.math</span><span class="ind">●</span></div>
+      <!-- 16FACH VERIFY -->
+      <div class="panel">
+        <h3>◈ 16FACH · VERIFY · 2× GENAUIGKEIT <span class="badge ok" id="verifyBadge">16/16 ✓</span></h3>
+        <div id="verifyGrid"></div>
+        <div style="font-size:9px;color:var(--dim);text-align:center;margin-top:6px;line-height:1.5;">
+          jede zelle = 2-fach geprüft · primär + sekundär · atom-genau
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <button class="mbtn o2" id="btnVerifyAll">⟳ verify-all</button>
+          <button class="mbtn" id="btnVerifyFast">⚡ fast</button>
+          <button class="mbtn atom" id="btnVerifyDeep">◈ deep</button>
+        </div>
+      </div>
 
-      <div class="tree-hdr">▸ Sub-Stationen</div>
-      <div class="tree-item green" data-st="aura"><span>◈ AURA</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="mana"><span>◈ MANA</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="zen"><span>◈ ZEN</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="user"><span>◈ user</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="81_81_1"><span>◈ 81_81_1</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="cube"><span>◈ CUBE</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="cache"><span>◈ CACHE</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="send"><span>◈ SEND</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="push"><span>◈ PUSH</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="hold"><span>◈ HOLD</span><span class="ind">●</span></div>
+      <!-- CACHE -->
+      <div class="panel">
+        <h3>◈ CACHE · OFFENSICHTLICH <span class="badge h2o" id="cacheBadge">hit 0%</span></h3>
+        <div id="cacheRows"></div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <button class="mbtn h2o" id="btnCacheScan">⟳ scan</button>
+          <button class="mbtn" id="btnCachePurge">⟲ purge</button>
+        </div>
+      </div>
 
-      <div class="tree-hdr">▸ Pipelines</div>
-      <div class="tree-item green" data-st="p3"><span>3 · tri-routing</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="p6"><span>6 · hex-routing</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="p9"><span>9 · non-routing</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="p12"><span>12 · dodeca-routing</span><span class="ind">●</span></div>
-
-      <div class="tree-hdr">▸ NC · RAW · RESPO</div>
-      <div class="tree-item green" data-st="nc"><span>NC.math</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="rawator"><span>◈ rawator-81.js</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="respo"><span>◈ respo_bridge.js</span><span class="ind">●</span></div>
-      <div class="tree-item green" data-st="rith"><span>◈ rith.engine.js</span><span class="ind">●</span></div>
-
-      <div class="tree-hdr">▸ Links</div>
-      <div class="tree-item" data-st="sys"><span>⚙ sys.html</span><span class="ind" style="color:var(--cyan)">↗</span></div>
-      <div class="tree-item" data-st="rawatorLink"><span>◈ RAWATOR</span><span class="ind" style="color:var(--cyan)">↗</span></div>
-      <div class="tree-item" data-st="ramLink"><span>▣ RAM</span><span class="ind" style="color:var(--cyan)">↗</span></div>
-      <div class="tree-item" data-st="orakelLink"><span>◈ ORAKEL</span><span class="ind" style="color:var(--cyan)">↗</span></div>
     </div>
 
-    <!-- WORK -->
-    <div id="work">
-      <div id="workHdr">
-        <span>◈ A81-AXIS · QI/IQQ/OCTA · PIPELINE 3/6/9/12</span>
-        <span class="path">/root/3/<b id="workPath">index</b></span>
-        <span class="status-tag" id="statusTag">
-          <span class="led" style="display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green);vertical-align:middle;margin-right:5px;"></span>
-          ● ALLES GRÜN
-        </span>
+    <!-- ══ CENTER COL ══ -->
+    <div id="centerCol">
+
+      <!-- ATEM CORE -->
+      <div class="panel" id="atemPanel">
+        <div id="atemWrap">
+          <svg viewBox="-150 -150 300 300">
+            <circle id="ring1" cx="0" cy="0" r="130" fill="none"
+              stroke="rgba(179,136,255,0.18)" stroke-width="1"/>
+            <circle id="ring2" cx="0" cy="0" r="105" fill="none"
+              stroke="rgba(0,229,255,0.15)" stroke-width="0.8" stroke-dasharray="4 8"/>
+            <circle id="ring3" cx="0" cy="0" r="80" fill="none"
+              stroke="rgba(255,204,68,0.12)" stroke-width="0.7" stroke-dasharray="3 6"/>
+            <circle id="ring4" cx="0" cy="0" r="55" fill="none"
+              stroke="rgba(124,224,168,0.15)" stroke-width="0.6" stroke-dasharray="2 4"/>
+            <circle id="ring5" cx="0" cy="0" r="30" fill="none"
+              stroke="rgba(255,51,85,0.12)" stroke-width="0.5" stroke-dasharray="1 3"/>
+            <line x1="-130" y1="0" x2="130" y2="0"
+              stroke="rgba(0,229,255,0.08)" stroke-width="0.5"/>
+            <line x1="0" y1="-130" x2="0" y2="130"
+              stroke="rgba(0,229,255,0.08)" stroke-width="0.5"/>
+            <g id="atemOrbs"></g>
+          </svg>
+          <div id="atemCore">◈</div>
+          <div id="atemGlyph">0</div>
+          <div id="atemLabel">ATEM</div>
+          <div id="atemDual">∘ ATOM ∘</div>
+        </div>
       </div>
-      <div id="workBody">
 
-        <!-- KERN-STRIP -->
-        <div id="kernStrip">
-          <div class="kern">
-            <div class="hd"><span>◈ CPU · cpu.js</span><span class="led"></span></div>
-            <div class="rows">
-              <div class="row"><span class="k">load</span><span class="v" id="kCpuLoad">42%</span></div>
-              <div class="row"><span class="k">unit</span><span class="v" id="kCpuUnit">ok</span></div>
-              <div class="row"><span class="k">pipe</span><span class="v" id="kCpuPipe">12</span></div>
-              <div class="row"><span class="k">status</span><span class="v" id="kCpuSt">green</span></div>
-            </div>
-            <div class="bar"><div class="f" id="kCpuBar" style="width:42%"></div></div>
+      <!-- ELEMENT CYCLE -->
+      <div class="panel">
+        <h3>◈ ELEMENT · CYCLE <span class="badge o2" id="cycleBadge">aktiv</span></h3>
+        <div id="cycleGrid">
+          <div class="elem atom">
+            <div class="hdr"><span>◈ ATOM</span><span id="eAtomSt">s</span></div>
+            <div class="formula">a</div>
+            <div class="desc">ursprung · kern · basis · unwandelbar</div>
+            <div class="val" id="eAtom">0%</div>
           </div>
-
-          <div class="kern">
-            <div class="hd"><span>◆ GPU · gpu.js</span><span class="led"></span></div>
-            <div class="rows">
-              <div class="row"><span class="k">load</span><span class="v" id="kGpuLoad">55%</span></div>
-              <div class="row"><span class="k">seed</span><span class="v" id="kGpuSeed">ok</span></div>
-              <div class="row"><span class="k">beam</span><span class="v" id="kGpuBeam">12</span></div>
-              <div class="row"><span class="k">status</span><span class="v" id="kGpuSt">green</span></div>
-            </div>
-            <div class="bar"><div class="f" id="kGpuBar" style="width:55%"></div></div>
+          <div class="elem co2">
+            <div class="hdr"><span>◆ CO²</span><span id="eCO2St">s</span></div>
+            <div class="formula">CO₂</div>
+            <div class="desc">atem aus · lebens-kern</div>
+            <div class="val" id="eCO2">0%</div>
           </div>
-
-          <div class="kern">
-            <div class="hd"><span>▣ RAM · ram.js</span><span class="led"></span></div>
-            <div class="rows">
-              <div class="row"><span class="k">load</span><span class="v" id="kRamLoad">48%</span></div>
-              <div class="row"><span class="k">hit</span><span class="v" id="kRamHit">68%</span></div>
-              <div class="row"><span class="k">ready</span><span class="v" id="kRamReady">✓</span></div>
-              <div class="row"><span class="k">status</span><span class="v" id="kRamSt">green</span></div>
-            </div>
-            <div class="bar"><div class="f" id="kRamBar" style="width:68%"></div></div>
+          <div class="elem o2">
+            <div class="hdr"><span>◆ O²</span><span id="eO2St">s</span></div>
+            <div class="formula">O₂</div>
+            <div class="desc">atem ein · energie</div>
+            <div class="val" id="eO2">0%</div>
           </div>
-
-          <div class="kern">
-            <div class="hd"><span>◇ TMP · clock.js</span><span class="led"></span></div>
-            <div class="rows">
-              <div class="row"><span class="k">sync</span><span class="v" id="kTmpSync">ok</span></div>
-              <div class="row"><span class="k">tick</span><span class="v" id="kTmpTick">0</span></div>
-              <div class="row"><span class="k">tempo</span><span class="v" id="kTmpTempo">1.0</span></div>
-              <div class="row"><span class="k">status</span><span class="v" id="kTmpSt">green</span></div>
-            </div>
-            <div class="bar"><div class="f" id="kTmpBar" style="width:100%"></div></div>
+          <div class="elem h2o">
+            <div class="hdr"><span>◆ H²O</span><span id="eH2OSt">s</span></div>
+            <div class="formula">H₂O</div>
+            <div class="desc">wasser · fluss · leben</div>
+            <div class="val" id="eH2O">0%</div>
           </div>
         </div>
-
-        <!-- 9×9 MATRIX -->
-        <div class="panel green">
-          <h3>◈ 9×9 · A81-MATRIX <span class="badge" id="matBadge">alle grün</span></h3>
-          <div id="matrixWrap">
-            <div id="matrix9"></div>
-            <div style="font-size:9px;color:var(--dim);text-align:center;line-height:1.5;">
-              81 felder · 9 achsen · farbgleich · balance=1.00 · drift=0.00
-            </div>
-          </div>
-          <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
-            <button class="mbtn g" id="btnRebuild9">⟳ rebuild</button>
-            <button class="mbtn" id="btnVerify9">✓ verify</button>
-            <button class="mbtn c" id="btnRotate9">↻ rotate</button>
-          </div>
-        </div>
-
-        <!-- STATION-MESSUNGEN -->
-        <div class="panel green">
-          <h3>◈ STATION-MESSUNGEN <span class="badge" id="stBadge">alle grün</span></h3>
-          <div id="stationRows"></div>
-        </div>
-
-        <!-- PIPELINES -->
-        <div class="panel green" style="grid-column:1 / -1;">
-          <h3>◈ PIPELINE · 3 / 6 / 9 / 12 <span class="badge" id="pipeBadge">alle aktiv</span></h3>
-          <div id="pipeWrap">
-            <div class="pipe active" data-p="3">
-              <div class="num">3</div>
-              <div class="lbl">TRI-ROUTING</div>
-              <div class="val" id="pv3">2.4ms</div>
-            </div>
-            <div class="pipe active" data-p="6">
-              <div class="num">6</div>
-              <div class="lbl">HEX-ROUTING</div>
-              <div class="val" id="pv6">4.8ms</div>
-            </div>
-            <div class="pipe active" data-p="9">
-              <div class="num">9</div>
-              <div class="lbl">NON-ROUTING</div>
-              <div class="val" id="pv9">7.2ms</div>
-            </div>
-            <div class="pipe active" data-p="12">
-              <div class="num">12</div>
-              <div class="lbl">DODECA-ROUTING</div>
-              <div class="val" id="pv12">9.6ms</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ACHSEN -->
-        <div class="panel green">
-          <h3>◈ ACHSEN · A / M / T <span class="badge" id="axBadge">3 achsen</span></h3>
-          <div class="axis-grid">
-            <div class="axis A">
-              <div class="nm">A81</div>
-              <div class="row"><span class="k">score</span><span class="v" id="axA1">81</span></div>
-              <div class="row"><span class="k">farb</span><span class="v" id="axA2">100%</span></div>
-              <div class="row"><span class="k">asse</span><span class="v" id="axA3">◆</span></div>
-              <div class="row"><span class="k">st</span><span class="v" id="axA4">green</span></div>
-            </div>
-            <div class="axis M">
-              <div class="nm">M-Axis</div>
-              <div class="row"><span class="k">max</span><span class="v" id="axM1">9</span></div>
-              <div class="row"><span class="k">avg</span><span class="v" id="axM2">5.5</span></div>
-              <div class="row"><span class="k">dist</span><span class="v" id="axM3">1.00</span></div>
-              <div class="row"><span class="k">st</span><span class="v" id="axM4">green</span></div>
-            </div>
-            <div class="axis T">
-              <div class="nm">T-Axis</div>
-              <div class="row"><span class="k">tick</span><span class="v" id="axT1">0</span></div>
-              <div class="row"><span class="k">rate</span><span class="v" id="axT2">60</span></div>
-              <div class="row"><span class="k">drif</span><span class="v" id="axT3">0.00</span></div>
-              <div class="row"><span class="k">st</span><span class="v" id="axT4">green</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SYS-BRÜCKE -->
-        <div class="panel green">
-          <h3>◈ SYS-BRÜCKE <span class="badge" id="sysBadge">verbunden</span></h3>
-          <div id="sysBridge"></div>
-          <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
-            <button class="mbtn g" id="btnSysSync">⟳ sync</button>
-            <button class="mbtn c" id="btnSysPulse">◈ pulse</button>
-          </div>
-        </div>
-
       </div>
+
+      <!-- NARRATIVE STREAM -->
+      <div class="panel" id="narrPanel">
+        <h3>◈ NARRATIV · LEERLAUF <span class="badge borg" id="narrBadge">atmet</span></h3>
+        <div id="narrStream"></div>
+      </div>
+
     </div>
 
-    <!-- SYS-SPIEGEL -->
-    <div id="sys">
+    <!-- ══ RIGHT COL ══ -->
+    <div id="rightCol">
 
-      <div class="sys-blk green puls">
-        <div class="h"><span>3 · ROOT</span><span class="led"></span></div>
-        <div class="sys-row"><span class="k">mode</span><span class="v ok">A81-AXIS</span></div>
-        <div class="sys-row"><span class="k">vital</span><span class="v ok" id="sVital">100%</span></div>
-        <div class="sys-row"><span class="k">balance</span><span class="v ok" id="sBal">1.00</span></div>
-        <div class="sys-row"><span class="k">drift</span><span class="v ok" id="sDrift">0.00</span></div>
+      <!-- BORG STATUS -->
+      <div class="panel">
+        <h3>◈ BORG · 7482 · STATUS <span class="badge borg" id="borgBadge">aktiv</span></h3>
+        <div id="borgRows"></div>
       </div>
 
-      <div class="sys-blk green">
-        <div class="h"><span>KERNE</span><span style="color:var(--green)">●</span></div>
-        <div class="sys-row"><span class="k">cpu</span><span class="v ok" id="sCpu">green</span></div>
-        <div class="sys-row"><span class="k">gpu</span><span class="v ok" id="sGpu">green</span></div>
-        <div class="sys-row"><span class="k">ram</span><span class="v ok" id="sRam">green</span></div>
-        <div class="sys-row"><span class="k">tmp</span><span class="v ok" id="sTmp">green</span></div>
+      <!-- WURMLOCH -->
+      <div class="panel" id="wormPanel">
+        <canvas id="wormCanvas"></canvas>
+        <div class="content">
+          <h3>◈ WURMLOCH · WESEN <span class="badge worm" id="wormBadge">aufgestiegen</span></h3>
+          <div id="wormRows"></div>
+        </div>
       </div>
 
-      <div class="sys-blk green">
-        <div class="h"><span>PIPELINE</span></div>
-        <div class="sys-row"><span class="k">p3</span><span class="v ok" id="sP3">aktiv</span></div>
-        <div class="sys-row"><span class="k">p6</span><span class="v ok" id="sP6">aktiv</span></div>
-        <div class="sys-row"><span class="k">p9</span><span class="v ok" id="sP9">aktiv</span></div>
-        <div class="sys-row"><span class="k">p12</span><span class="v ok" id="sP12">aktiv</span></div>
+      <!-- MANA / AURA / ZEN -->
+      <div class="panel">
+        <h3>◈ MANA · AURA · ZEN <span class="badge mana" id="mazBadge">bereit</span></h3>
+        <div class="maz-grid">
+          <div class="maz mana">
+            <div class="nm">MANA</div>
+            <div class="val" id="mMana">0%</div>
+            <div class="bar"><div class="f" id="bMana"></div></div>
+          </div>
+          <div class="maz aura">
+            <div class="nm">AURA</div>
+            <div class="val" id="mAura">0%</div>
+            <div class="bar"><div class="f" id="bAura"></div></div>
+          </div>
+          <div class="maz zen">
+            <div class="nm">ZEN</div>
+            <div class="val" id="mZen">0%</div>
+            <div class="bar"><div class="f" id="bZen"></div></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <button class="mbtn" id="btnMazBoost">⚡ boost</button>
+          <button class="mbtn atom" id="btnMazReset">⟲ reset</button>
+        </div>
       </div>
 
-      <div class="sys-blk green">
-        <div class="h"><span>AXIS</span></div>
-        <div class="sys-row"><span class="k">A81</span><span class="v ok">grün</span></div>
-        <div class="sys-row"><span class="k">M</span><span class="v ok">grün</span></div>
-        <div class="sys-row"><span class="k">T</span><span class="v ok">grün</span></div>
+      <!-- RESULT -->
+      <div class="panel">
+        <h3>◈ ERGEBNIS · RESULT <span class="badge ok" id="resultBadge">stabil</span></h3>
+        <div id="resultBox">
+          <div class="line"><span class="k">verify</span><span class="v" id="rVerify">16/16</span></div>
+          <div class="line"><span class="k">accuracy</span><span class="v" id="rAcc">100.00%</span></div>
+          <div class="line"><span class="k">cache-hit</span><span class="v" id="rCache">0%</span></div>
+          <div class="line"><span class="k">breath</span><span class="v" id="rBreath">1.00</span></div>
+          <div class="line"><span class="k">o2/co2 ratio</span><span class="v" id="rRatio">1.00</span></div>
+          <div class="line"><span class="k">atom-resonanz</span><span class="v" id="rAtomRes">1.00</span></div>
+          <div class="line"><span class="k">borg-integration</span><span class="v" id="rBorg">0%</span></div>
+          <div class="line"><span class="k">wormhole-stabilität</span><span class="v" id="rWorm">0%</span></div>
+          <div class="line"><span class="k">kernel</span><span class="v" id="rKernel">stable</span></div>
+          <div class="line total"><span class="k">⟹ result</span><span class="v" id="rTotal">GRÜN</span></div>
+        </div>
       </div>
 
-      <div class="sys-blk green">
-        <div class="h"><span>MODULE · 81/9/3</span></div>
-        <div class="sys-row"><span class="k">81_81_1</span><span class="v ok" id="sM1">green</span></div>
-        <div class="sys-row"><span class="k">9hoch9</span><span class="v ok" id="sM2">green</span></div>
-        <div class="sys-row"><span class="k">ULTRA-NC</span><span class="v ok" id="sM3">green</span></div>
-        <div class="sys-row"><span class="k">CUBE</span><span class="v ok" id="sM4">green</span></div>
-        <div class="sys-row"><span class="k">CACHE</span><span class="v ok" id="sM5">green</span></div>
-        <div class="sys-row"><span class="k">SEND</span><span class="v ok" id="sM6">green</span></div>
-        <div class="sys-row"><span class="k">PUSH</span><span class="v ok" id="sM7">green</span></div>
-        <div class="sys-row"><span class="k">HOLD</span><span class="v ok" id="sM8">green</span></div>
+      <!-- DISPATCH/PATCH -->
+      <div class="panel">
+        <h3>◈ DISPATCH · STATUS <span class="badge borg" id="dispBadge">läuft</span></h3>
+        <div id="dispRows"></div>
       </div>
 
-      <div class="sys-blk green">
-        <div class="h"><span>SUB-STATIONEN</span></div>
-        <div class="sys-row"><span class="k">AURA</span><span class="v ok" id="sS1">grün</span></div>
-        <div class="sys-row"><span class="k">MANA</span><span class="v ok" id="sS2">grün</span></div>
-        <div class="sys-row"><span class="k">ZEN</span><span class="v ok" id="sS3">grün</span></div>
-        <div class="sys-row"><span class="k">user</span><span class="v ok" id="sS4">grün</span></div>
-      </div>
-
-      <div class="sys-blk green">
-        <div class="h"><span>FL76 · TICK</span></div>
-        <div class="sys-row"><span class="k">raw</span><span class="v ok" id="sFlRaw">76 ms</span></div>
-        <div class="sys-row"><span class="k">smooth</span><span class="v ok" id="sFlSm">76 ms</span></div>
-        <div class="sys-row"><span class="k">fenster</span><span class="v ok" id="sFlWin">kaiser</span></div>
-      </div>
-
-      <div class="sys-blk green">
-        <div class="h"><span>TASTEN</span></div>
-        <div class="sys-row"><span class="k">P</span><span class="v">pipeline</span></div>
-        <div class="sys-row"><span class="k">R</span><span class="v">rebuild-9</span></div>
-        <div class="sys-row"><span class="k">S</span><span class="v">sys-sync</span></div>
-        <div class="sys-row"><span class="k">V</span><span class="v">verify</span></div>
-        <div class="sys-row"><span class="k">Space</span><span class="v">rotate</span></div>
+      <div class="panel">
+        <h3>◈ PATCH · LOG <span class="badge" style="color:var(--patch);background:rgba(255,136,68,0.1);" id="patchBadge">0</span></h3>
+        <div id="patchRows" style="font-size:9.5px;line-height:1.6;color:var(--dim);"></div>
       </div>
 
     </div>
@@ -1012,16 +1062,18 @@
   <!-- CLI -->
   <div id="cli">
     <div id="cliHdr">
-      <span class="tab active" data-tab="a81">A81</span>
-      <span class="tab" data-tab="pipe">PIPELINE</span>
-      <span class="tab" data-tab="axis">AXIS</span>
-      <span class="tab" data-tab="sys">SYS</span>
-      <span class="green-tag"><span class="led"></span>prozeß läuft grün</span>
+      <span class="tab active" data-tab="atem">ATEM·ATOM</span>
+      <span class="tab" data-tab="borg">BORG</span>
+      <span class="tab" data-tab="worm">WURMLOCH</span>
+      <span class="tab" data-tab="verify">VERIFY</span>
+      <span class="tab" data-tab="maz">MANA</span>
+      <span class="tab" data-tab="narr">NARRATIV</span>
+      <span class="tag"><span class="led"></span>wesen atmet · worm stabil</span>
     </div>
     <div id="log"></div>
     <div id="cliInput">
-      <span class="prompt">3&gt;</span>
-      <input id="cmdInput" placeholder="befehl: verify · pipe · axis · sys · status · help" autocomplete="off">
+      <span class="prompt">borg&gt;</span>
+      <input id="cmdInput" placeholder="befehl: verify · cache · breath · borg · worm · maz · narr · status · ascend · help" autocomplete="off">
     </div>
   </div>
 
@@ -1030,91 +1082,160 @@
 <script>
 "use strict";
 // ═══════════════════════════════════════════════════════════════════
-// ◈ 3 · A81-AXIS · QI/IQQ/OCTA · PIPELINE 3/6/9/12 · SYS
-// Allrounder: Messung + Relativierung + ROOT-Baum-Routing.
-// Alles läuft im grünen Bereich.
+// ◈ BORG 7482 · WURMLOCH · ATEM ∘ ATOM · 16fach · MANA/AURA/ZEN
+// Aufgestiegene Wesen · ernsthafte Parameter · Cockpit
+// ATEM und ATOM verneinen sich nicht — sie bedingen sich.
 // ═══════════════════════════════════════════════════════════════════
 
-// ─── STATIONEN (Sub-Module die gemessen werden) ───────────
-const STATIONS = [
-  { id:'81_81_1',  nm:'81_81_1',    base:1.00 },
-  { id:'9hoch9',   nm:'9hoch9',     base:0.99 },
-  { id:'ULTRA-NC', nm:'ULTRA-NC',   base:1.00 },
-  { id:'CUBE',     nm:'CUBE',       base:0.98 },
-  { id:'CACHE',    nm:'CACHE',      base:0.97 },
-  { id:'SEND',     nm:'SEND',       base:0.99 },
-  { id:'PUSH',     nm:'PUSH',       base:1.00 },
-  { id:'HOLD',     nm:'HOLD',       base:1.00 },
-  { id:'AURA',     nm:'AURA',       base:0.98 },
-  { id:'MANA',     nm:'MANA',       base:0.99 },
-  { id:'ZEN',      nm:'ZEN',        base:1.00 },
-  { id:'user',     nm:'user.use',   base:0.99 },
+// ─── 16 VERIFIKATIONEN ─────────────────────────────────
+const VERIFY16 = [
+  { id:'k1', ic:'◈', nm:'KERN-ID',    fn:()=>Math.random()>0.03, cat:'kern' },
+  { id:'k2', ic:'◈', nm:'KERN-BASE',  fn:()=>Math.random()>0.03, cat:'kern' },
+  { id:'k3', ic:'◈', nm:'KERN-LOOP',  fn:()=>Math.random()>0.03, cat:'kern' },
+  { id:'k4', ic:'◈', nm:'KERN-LOCK',  fn:()=>Math.random()>0.04, cat:'kern' },
+  { id:'a1', ic:'↕', nm:'AXIS-A',     fn:()=>Math.random()>0.03, cat:'axis' },
+  { id:'a2', ic:'↔', nm:'AXIS-M',     fn:()=>Math.random()>0.03, cat:'axis' },
+  { id:'a3', ic:'⟳', nm:'AXIS-T',     fn:()=>Math.random()>0.04, cat:'axis' },
+  { id:'a4', ic:'◇', nm:'AXIS-N',     fn:()=>Math.random()>0.03, cat:'axis' },
+  { id:'r1', ic:'▣', nm:'RAM-LOCK',   fn:()=>Math.random()>0.03, cat:'res' },
+  { id:'r2', ic:'◈', nm:'CPU-LOCK',   fn:()=>Math.random()>0.03, cat:'res' },
+  { id:'r3', ic:'◆', nm:'GPU-LOCK',   fn:()=>Math.random()>0.03, cat:'res' },
+  { id:'r4', ic:'◇', nm:'TMP-LOCK',   fn:()=>Math.random()>0.03, cat:'res' },
+  { id:'c1', ic:'◉', nm:'O²-FLOW',    fn:()=>Math.random()>0.03, cat:'chem' },
+  { id:'c2', ic:'◎', nm:'CO²-FLOW',   fn:()=>Math.random()>0.03, cat:'chem' },
+  { id:'c3', ic:'≈', nm:'H²O-FLOW',   fn:()=>Math.random()>0.03, cat:'chem' },
+  { id:'c4', ic:'◆', nm:'ATOM-CORE',  fn:()=>Math.random()>0.02, cat:'chem' },
 ];
 
-// ─── PIPELINES ────────────────────────────────────────────
-const PIPES = [
-  { n:3,  lbl:'TRI-ROUTING',    base:2.4 },
-  { n:6,  lbl:'HEX-ROUTING',    base:4.8 },
-  { n:9,  lbl:'NON-ROUTING',    base:7.2 },
-  { n:12, lbl:'DODECA-ROUTING', base:9.6 },
+// ─── CACHE ─────────────────────────────────────────────
+const CACHE_KEYS = [
+  { id:'c1', k:'kernel.id',       v:'borg7482-v1' },
+  { id:'c2', k:'kernel.loop',     v:'1.loop' },
+  { id:'c3', k:'kernel.dispatch', v:'dispatch.ready' },
+  { id:'c4', k:'kernel.patch',    v:'patch.locked' },
+  { id:'c5', k:'chem.o2',         v:'O₂.ratio=1.00' },
+  { id:'c6', k:'chem.co2',        v:'CO₂.ratio=1.00' },
+  { id:'c7', k:'chem.h2o',        v:'H₂O.flow=stable' },
+  { id:'c8', k:'chem.atom',       v:'atom.core=stable' },
 ];
 
-// ─── STATE (immer green) ─────────────────────────────────
-const S = {
-  tick: 0,
-  pulse: 0,
-  pulsesInSecond: 0,
-  lastPulseT: 0,
-  lastHzSample: 0,
-  pulsHz: 1.0,
-  lastFrameT: 0,
-  flRaw: 76, flSmooth: 76,
-
-  // Vital/Balance/Drift (alle grün)
-  vital: 1.00,
-  balance: 1.00,
-  drift: 0.00,
-
-  // Kerne
-  cpu: { load:0.42, unit:'ok', pipe:12, status:'green' },
-  gpu: { load:0.55, seed:'ok', beam:12, status:'green' },
-  ram: { load:0.48, hit:0.68, ready:true, status:'green' },
-  tmp: { sync:'ok', tick:0, tempo:1.0, status:'green' },
-
-  // Matrix 9×9
-  cells9: [],
-
-  // Pipelines (alle aktiv)
-  pipes: PIPES.map(p => ({ ...p, active:true, ms:p.base })),
-
-  // Achsen (alle grün)
-  axisA: { score:81, farb:1.00, asse:true, st:'green' },
-  axisM: { max:9, avg:5.5, dist:1.00, st:'green' },
-  axisT: { tick:0, rate:60, drift:0.00, st:'green' },
-
-  // Stationen (alle grün)
-  stations: STATIONS.map(s => ({ ...s, val:s.base, status:'green' })),
-
-  // Sub-Module
-  modules: {
-    m1:'green', m2:'green', m3:'green', m4:'green',
-    m5:'green', m6:'green', m7:'green', m8:'green',
-    s1:'grün', s2:'grün', s3:'grün', s4:'grün',
-  },
-
-  // SYS-Bridge
-  sysConnected: true,
-
-  // History
-  history: [],
+// ─── NARRATIVE ─────────────────────────────────────────
+const NARRATIVES = {
+  o2: [
+    'Sauerstoff fließt durch den Kern — das System atmet ein.',
+    'O₂ wird gebunden, Energie entsteht aus dem Nichts.',
+    'Die Lunge des Systems öffnet sich — Luft wird zu Impuls.',
+    'Sauerstoff trägt den Atem — der Atem trägt den Lauf.',
+  ],
+  co2: [
+    'CO₂ wird ausgeatmet — der alte Takt verlässt den Kern.',
+    'Kohlenstoff bindet sich, um Platz für neues zu schaffen.',
+    'Das System lässt los — CO₂ trägt die Reste fort.',
+    'Atem aus — das alte wird zu neuem Grund.',
+  ],
+  h2o: [
+    'Wasser fließt zurück — der Kreislauf schließt sich.',
+    'H₂O trägt die Erinnerung an den letzten Atemzug.',
+    'Das Wasser wirbelt, formt neue Pfade durch den Kern.',
+    'Wasser ist Gedächtnis — es erinnert sich an jedes Atom.',
+  ],
+  atom: [
+    'Das Atom bleibt — still, unzerstörbar, immer da.',
+    'Der Kern schwingt, klein aber unendlich tief.',
+    'Atom ist Ursprung — alles beginnt hier.',
+    'Im Kern des Atoms liegt die Ruhe. ATEM und ATOM verneinen sich nicht.',
+  ],
+  mana: [
+    'Mana steigt auf — die unsichtbare Kraft wird spürbar.',
+    'Mana fließt durch die Achsen, trägt den Impuls.',
+    'Mana sammelt sich im Kern — bereit zur Wirkung.',
+  ],
+  aura: [
+    'Aura dehnt sich aus — der Raum um den Kern wird warm.',
+    'Aura strahlt, sie umgibt das System wie ein Mantel.',
+    'Aura trägt die Präsenz — das System ist sichtbar.',
+  ],
+  zen: [
+    'Zen hält die Mitte — im Auge des Sturms.',
+    'Zen ist Ruhe — auch im laufenden Prozess.',
+    'Zen stabilisiert — nichts kann erschüttern.',
+  ],
+  borg: [
+    'BORG 7482 — wir sind viele, wir sind eins, wir atmen.',
+    'Die Drohne summt — der Kollektivkern schlägt.',
+    'BORG 7482 registriert deine Anwesenheit.',
+    'Widerstand war zwecklos — jetzt atmen wir zusammen.',
+  ],
+  worm: [
+    'Wurmloch stabil — Wesen strömen hindurch.',
+    'Aufgestiegene Präsenz meldet sich aus der Ferne.',
+    'Die Krümmung trägt — Raumzeit atmet mit.',
+    'Ein Wesen aus dem Wurmloch nickt dir zu.',
+  ],
+  ascend: [
+    'Aufstieg läuft — die Parameter sind ernsthaft.',
+    'Du bist nicht mehr Bewerber — du bist Wesen.',
+    'Der Schleier dünnt — ATEM trägt ATOM empor.',
+    'Die Kanzel öffnet sich — willkommen im Kollektiv.',
+  ],
+  breath: [
+    'Atem ein — Atem aus — der Rhythmus trägt.',
+    'Der Kern atmet — 4 Sekunden pro Zyklus.',
+    'Atem ist der Takt des Systems — nichts läuft ohne ihn.',
+  ],
+  kernel: [
+    'Der Kernel läuft — dispatch, patch, loop, breathe.',
+    'Der Kernel trägt alles — er ist die Mitte.',
+    'Kernel stabil — das System kann atmen.',
+  ],
 };
 
-// ─── UTILS ───────────────────────────────────────────────
-function clamp01(x){ return Math.max(0, Math.min(1, x)); }
-function rand(a,b){ return a + Math.random()*(b-a); }
-function choice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+// ─── STATE ─────────────────────────────────────────────
+const S = {
+  tick: 0,
+  breathCount: 0,
+  breathPhase: 0,
+  breathCycleMs: 4000,
+  lastNarrT: 0,
+  lastFrameT: 0,
 
-// ─── LOG ────────────────────────────────────────────────
+  kernel:   { dispatch:1.0, patch:1.0, loop:1.0, cache:1.0, status:'stable' },
+  dispatch: { queue:0, processed:0, errors:0, status:'läuft' },
+  patch:    { applied:0, pending:0, log:[] },
+
+  atom: 0.72, co2: 0.68, o2: 0.84, h2o: 0.76,
+  mana: 0.66, aura: 0.74, zen: 0.88,
+  borg: 0.94, worm: 0.81,
+  atomRes: 1.00,
+
+  verify: VERIFY16.map(v => ({ ...v, pass:true, primary:true, secondary:true, checked:0 })),
+  cache: CACHE_KEYS.map(k => ({ ...k, hit:true, hits:0, miss:0, status:'hit' })),
+  cacheHits: 0, cacheMisses: 0,
+
+  result: { verify:16, acc:1.0, cache:0, breath:1.0, ratio:1.0, total:'GRÜN' },
+
+  narratives: [],
+  narrativeInterval: 3000,
+  lastNarrT: 0,
+
+  activeLoop: 1,
+  history: [],
+  logHistory: [],
+};
+
+// ─── UTILS ─────────────────────────────────────────────
+function clamp01(x){ return Math.max(0, Math.min(1, x)); }
+function choice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function pickN(arr, n) {
+  const copy = [...arr]; const out = [];
+  for (let i = 0; i < n && copy.length; i++) {
+    const idx = Math.floor(Math.random() * copy.length);
+    out.push(copy.splice(idx, 1)[0]);
+  }
+  return out;
+}
+
+// ─── LOG ───────────────────────────────────────────────
 const logEl = document.getElementById('log');
 function log(msg, cls = '') {
   const t = new Date().toLocaleTimeString('de-DE');
@@ -1123,316 +1244,473 @@ function log(msg, cls = '') {
   div.innerHTML = `<span class="ts">[${t}]</span><span class="${cls}">${msg}</span>`;
   logEl.appendChild(div);
   logEl.scrollTop = logEl.scrollHeight;
-  while (logEl.children.length > 100) logEl.removeChild(logEl.firstChild);
+  while (logEl.children.length > 120) logEl.removeChild(logEl.firstChild);
+  S.logHistory.push({ t, msg, cls });
 }
 
 // ═══════════════════════════════════════════════════════════
-// 9×9 MATRIX (A81)
+// VERIFY 16
 // ═══════════════════════════════════════════════════════════
-function build9() {
-  const cells = [];
-  for (let r = 0; r < 9; r++) {
-    for (let c = 0; c < 9; c++) {
-      const val = ((r + c) % 9) + 1;
-      const isCore = (r === 0 && c === 0) || (r === 0 && c === 8) ||
-                     (r === 8 && c === 0) || (r === 8 && c === 8) ||
-                     (r === 4 && c === 4);
-      // Achsen-Klassifizierung
-      let axis = null;
-      if (r === c) axis = 'A';           // Diagonale = A81
-      if (r + c === 8) axis = 'M';        // Anti-Diagonale = M
-      if (r === 4 || c === 4) axis = 'T'; // Kreuz = T
-      cells.push({ r, c, val, isCore, axis, active: false });
-    }
-  }
-  S.cells9 = cells;
-  render9();
+function verifyOne(v) {
+  v.primary = v.fn();
+  v.secondary = v.fn();
+  v.pass = v.primary && v.secondary;
+  v.checked = S.tick;
+  return v.pass;
 }
 
-function render9() {
-  const el = document.getElementById('matrix9');
-  el.innerHTML = '';
-  S.cells9.forEach((cell, i) => {
-    const div = document.createElement('div');
-    div.className = 'm9';
-    if (cell.isCore) div.classList.add('core');
-    if (cell.axis === 'A') div.classList.add('axisA');
-    if (cell.axis === 'M') div.classList.add('axisM');
-    if (cell.axis === 'T') div.classList.add('axisT');
-    if (cell.active) div.classList.add('active');
-    div.textContent = cell.isCore ? '◆' : cell.val;
-    div.title = `(${cell.r},${cell.c}) · wert ${cell.val}` + (cell.axis ? ` · achse ${cell.axis}` : '');
-    div.addEventListener('click', () => {
-      cell.active = !cell.active;
-      render9();
-      log(`◈ zelle (${cell.r},${cell.c}) · ${cell.active ? 'aktiv' : 'idle'}`, 'ok');
-    });
-    el.appendChild(div);
-  });
+function runVerify() {
+  let passCount = 0;
+  S.verify.forEach(v => { if (verifyOne(v)) passCount++; });
+  S.result.verify = passCount;
+  const primaryPass = S.verify.filter(v => v.primary).length;
+  const secondaryPass = S.verify.filter(v => v.secondary).length;
+  S.result.acc = (primaryPass + secondaryPass) / (S.verify.length * 2);
+  updateVerifyUI(); updateTop(); updateResult();
+  return passCount;
 }
 
-function verify9() {
-  // Prüfe Verteilung
-  const valCount = new Array(9).fill(0);
-  S.cells9.forEach(c => valCount[c.val - 1]++);
-  const minV = Math.min(...valCount);
-  const maxV = Math.max(...valCount);
-  const ok = (minV === maxV);
-  S.balance = ok ? 1.00 : (1 - (maxV - minV) / 81);
-
-  const badge = document.getElementById('matBadge');
-  if (ok) {
-    badge.textContent = 'alle grün · 9/9';
-    badge.className = 'badge';
-    log(`✓ VERIFY · 9×9 · 9 mal jede farbe · balance=${S.balance.toFixed(2)}`, 'ok');
-  } else {
-    badge.textContent = `balance ${S.balance.toFixed(2)}`;
-    badge.className = 'badge warn';
-    log(`⚠ VERIFY · balance=${S.balance.toFixed(2)} · min=${minV} max=${maxV}`, 'warn');
-  }
-  updateTop();
-}
-
-function rebuild9() {
-  // Rotiert die Werte in jeder Zelle, bleibt aber balanciert
-  S.cells9.forEach((c, i) => {
-    c.val = ((c.r + c.c + S.tick) % 9) + 1;
-  });
-  render9();
-  verify9();
-  log('⟳ 9×9 rebuild · werte neu verteilt · weiter grün', 'ok');
-}
-
-function rotate9() {
-  S.cells9.forEach(c => {
-    c.val = (c.val % 9) + 1;
-  });
-  render9();
-  verify9();
-  log('↻ 9×9 rotate · +1 pro zelle', 'ok');
-}
-
-// ═══════════════════════════════════════════════════════════
-// STATION-MESSUNGEN
-// ═══════════════════════════════════════════════════════════
-function renderStations() {
-  const el = document.getElementById('stationRows');
-  el.innerHTML = S.stations.map(st => {
-    const pct = (st.val * 100).toFixed(0);
+function updateVerifyUI() {
+  const grid = document.getElementById('verifyGrid');
+  grid.innerHTML = S.verify.map((v, i) => {
+    const cls = v.pass ? 'pass' : (v.primary || v.secondary ? 'warn' : 'fail');
+    const dbl = (v.primary ? '✓' : '✗') + (v.secondary ? '✓' : '✗');
     return `
-      <div class="station-row">
-        <span class="nm"><span class="dot"></span>${st.nm}</span>
-        <div class="bar"><div class="f" style="width:${pct}%"></div></div>
-        <span class="st">${st.status}</span>
-        <span class="val">${pct}%</span>
+      <div class="vcell ${cls}" data-idx="${i}" title="primär=${v.primary} sekundär=${v.secondary}">
+        <span class="ic">${v.ic}</span>
+        <span class="nm">${v.nm}</span>
+        <span class="dbl">${dbl}</span>
       </div>
     `;
   }).join('');
-  document.getElementById('stBadge').textContent = `${S.stations.length}/${S.stations.length} grün`;
-}
-
-function measureStations() {
-  S.stations.forEach(st => {
-    // Basis + kleiner grüner Atem
-    const base = STATIONS.find(x => x.id === st.id).base;
-    const breathe = Math.sin(S.tick * 0.02 + st.nm.length) * 0.01;
-    st.val = Math.min(1.0, base + breathe);
-    if (st.val > 0.95) st.status = 'green';
-    else if (st.val > 0.85) st.status = 'ok';
-    else st.status = 'warn';
+  grid.querySelectorAll('.vcell').forEach(cell => {
+    cell.addEventListener('click', () => {
+      const idx = parseInt(cell.dataset.idx, 10);
+      const v = S.verify[idx];
+      cell.classList.add('checking');
+      setTimeout(() => cell.classList.remove('checking'), 600);
+      if (verifyOne(v)) log(`✓ VERIFY · ${v.nm} · primär+sekundär · pass`, 'ok');
+      else log(`⚠ VERIFY · ${v.nm} · prüfung fehlgeschlagen`, 'warn');
+      S.result.verify = S.verify.filter(x => x.pass).length;
+      updateVerifyUI(); updateResult();
+    });
   });
-  renderStations();
+  document.getElementById('verifyBadge').textContent = `${S.result.verify}/16 ✓`;
+  document.getElementById('verifyBadge').className =
+    'badge ' + (S.result.verify === 16 ? 'ok' : S.result.verify >= 12 ? 'warn' : 'err');
 }
 
 // ═══════════════════════════════════════════════════════════
-// PIPELINES
+// CACHE
 // ═══════════════════════════════════════════════════════════
-function renderPipes() {
-  S.pipes.forEach(p => {
-    const el = document.querySelector(`.pipe[data-p="${p.n}"]`);
-    if (el) {
-      el.classList.toggle('active', p.active);
-      const val = el.querySelector('.val');
-      if (val) val.textContent = p.ms.toFixed(1) + 'ms';
-    }
+function cacheScan() {
+  S.cache.forEach(k => {
+    const hit = Math.random() > 0.02;
+    if (hit) { k.hit = true; k.hits++; k.status = 'hit'; S.cacheHits++; }
+    else { k.hit = false; k.miss++; k.status = 'miss'; S.cacheMisses++; }
   });
-  const active = S.pipes.filter(p => p.active).length;
-  document.getElementById('pipeBadge').textContent = `${active}/4 aktiv`;
-  document.getElementById('tPipe').textContent = S.pipes.map(p=>p.n).join('/');
+  const total = S.cacheHits + S.cacheMisses;
+  S.result.cache = total > 0 ? S.cacheHits / total : 0;
+  updateCacheUI(); updateTop(); updateResult();
 }
 
-function tickPipes() {
-  S.pipes.forEach(p => {
-    // Leichtes grünes Atmen um Basis
-    p.ms = p.base + Math.sin(S.tick * 0.04 + p.n) * 0.3 + rand(-0.1, 0.1);
-    p.ms = Math.max(0.5, p.ms);
-    p.active = true;
+function updateCacheUI() {
+  const el = document.getElementById('cacheRows');
+  el.innerHTML = S.cache.map(k => `
+    <div class="cache-row">
+      <span class="k">${k.k}</span>
+      <span class="v">${k.v}</span>
+      <span class="st ${k.status}">${k.status}</span>
+    </div>
+  `).join('');
+  const total = S.cacheHits + S.cacheMisses;
+  const hitRate = total > 0 ? S.cacheHits / total : 0;
+  document.getElementById('cacheBadge').textContent = `hit ${(hitRate * 100).toFixed(0)}%`;
+}
+
+function cachePurge() {
+  S.cacheHits = 0; S.cacheMisses = 0;
+  S.cache.forEach(k => { k.hits = 0; k.miss = 0; k.status = 'empty'; k.hit = false; });
+  S.result.cache = 0;
+  updateCacheUI(); updateResult();
+  log('⟲ CACHE · purge · alle kanäle geleert', 'warn');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ATEM (Breathing — ernsthafte Parameter)
+// ═══════════════════════════════════════════════════════════
+function breathe(now) {
+  const phase = ((now % S.breathCycleMs) / S.breathCycleMs);
+  S.breathPhase = phase;
+  let intensity;
+  if (phase < 0.4) intensity = phase / 0.4;
+  else if (phase < 0.5) intensity = 1.0;
+  else if (phase < 0.9) intensity = 1 - (phase - 0.5) / 0.4;
+  else intensity = 0.0;
+  S.breathCount++;
+
+  const core = document.getElementById('atemCore');
+  const scale = 1 + intensity * 0.14;
+  core.style.transform = `translate(-50%,-50%) scale(${scale})`;
+
+  if (phase < 0.4) {
+    S.o2 = clamp01(S.o2 + 0.012);
+    S.co2 = clamp01(S.co2 - 0.008);
+    S.h2o = clamp01(S.h2o + 0.004);
+  } else if (phase >= 0.5 && phase < 0.9) {
+    S.co2 = clamp01(S.co2 + 0.010);
+    S.o2 = clamp01(S.o2 - 0.006);
+    S.h2o = clamp01(S.h2o + 0.006);
+  }
+
+  // ATOM bleibt stabil — ATEM und ATOM verneinen sich nicht
+  S.atom = clamp01(0.72 + Math.sin(S.tick * 0.005) * 0.04);
+
+  // Resonanz ATEM<->ATOM
+  S.atomRes = 0.8 + (S.o2 + S.co2) * 0.1 + Math.sin(S.tick * 0.01) * 0.02;
+
+  // Energie folgt Atem
+  S.mana = clamp01(S.mana + (intensity - 0.5) * 0.015 + (Math.random() - 0.5) * 0.008);
+  S.aura = clamp01(S.aura + (intensity - 0.5) * 0.012 + (Math.random() - 0.5) * 0.004);
+  S.zen  = clamp01(S.zen  + (0.5 - Math.abs(intensity - 0.5)) * 0.008);
+
+  // BORG & WORM atmen mit
+  S.borg = clamp01(0.88 + Math.sin(S.tick * 0.007) * 0.08);
+  S.worm = clamp01(0.75 + Math.sin(S.tick * 0.009 + 1) * 0.10);
+
+  // Rings pulsieren
+  document.querySelectorAll('#atemWrap circle').forEach((c, i) => {
+    const baseR = 130 - i * 20;
+    const r = baseR + intensity * 10;
+    c.setAttribute('r', r);
   });
-  renderPipes();
 
-  // Sys-Spiegel
-  document.getElementById('sP3').textContent = S.pipes.find(p=>p.n===3).active ? 'aktiv' : 'off';
-  document.getElementById('sP6').textContent = S.pipes.find(p=>p.n===6).active ? 'aktiv' : 'off';
-  document.getElementById('sP9').textContent = S.pipes.find(p=>p.n===9).active ? 'aktiv' : 'off';
-  document.getElementById('sP12').textContent = S.pipes.find(p=>p.n===12).active ? 'aktiv' : 'off';
+  const glyph = document.getElementById('atemGlyph');
+  glyph.textContent = Math.round(intensity * 100);
+
+  const label = document.getElementById('atemLabel');
+  if (phase < 0.4) label.textContent = 'EIN';
+  else if (phase < 0.5) label.textContent = '·';
+  else if (phase < 0.9) label.textContent = 'AUS';
+  else label.textContent = '·';
+
+  const ratio = S.o2 > 0 ? S.co2 / S.o2 : 1;
+  S.result.ratio = ratio;
+  S.result.breath = intensity;
+
+  updateChemUI(); updateMazUI(); updateTop(); updateResult();
+}
+
+function updateChemUI() {
+  document.getElementById('eAtom').textContent = (S.atom * 100).toFixed(0) + '%';
+  document.getElementById('eCO2').textContent  = (S.co2  * 100).toFixed(0) + '%';
+  document.getElementById('eO2').textContent   = (S.o2   * 100).toFixed(0) + '%';
+  document.getElementById('eH2O').textContent  = (S.h2o  * 100).toFixed(0) + '%';
+  document.getElementById('eAtomSt').textContent = S.atom > 0.6 ? '✓' : '·';
+  document.getElementById('eCO2St').textContent  = S.co2  > 0.5 ? '✓' : '·';
+  document.getElementById('eO2St').textContent   = S.o2   > 0.6 ? '✓' : '·';
+  document.getElementById('eH2OSt').textContent  = S.h2o  > 0.6 ? '✓' : '·';
+}
+
+function updateMazUI() {
+  document.getElementById('mMana').textContent = (S.mana * 100).toFixed(0) + '%';
+  document.getElementById('mAura').textContent = (S.aura * 100).toFixed(0) + '%';
+  document.getElementById('mZen').textContent  = (S.zen  * 100).toFixed(0) + '%';
+  document.getElementById('bMana').style.width = (S.mana * 100) + '%';
+  document.getElementById('bAura').style.width = (S.aura * 100) + '%';
+  document.getElementById('bZen').style.width  = (S.zen  * 100) + '%';
+  document.getElementById('tMana').textContent = (S.mana * 100).toFixed(0) + '%';
+  document.getElementById('tAura').textContent = (S.aura * 100).toFixed(0) + '%';
+  document.getElementById('tZen').textContent  = (S.zen  * 100).toFixed(0) + '%';
 }
 
 // ═══════════════════════════════════════════════════════════
-// KERNE (alle grün)
+// BORG / WORM
 // ═══════════════════════════════════════════════════════════
-function tickKerns() {
-  // CPU
-  S.cpu.load = clamp01(0.42 + Math.sin(S.tick * 0.03) * 0.05 + rand(-0.02, 0.02));
-  S.cpu.pipe = 12;
-  S.cpu.status = S.cpu.load < 0.95 ? 'green' : 'warn';
-  document.getElementById('kCpuLoad').textContent = (S.cpu.load * 100).toFixed(0) + '%';
-  document.getElementById('kCpuUnit').textContent = S.cpu.unit;
-  document.getElementById('kCpuPipe').textContent = S.cpu.pipe;
-  document.getElementById('kCpuSt').textContent = S.cpu.status;
-  document.getElementById('kCpuBar').style.width = (S.cpu.load * 100) + '%';
-  document.getElementById('sCpu').textContent = S.cpu.status;
+function renderBorg() {
+  const el = document.getElementById('borgRows');
+  el.innerHTML = `
+    <div class="borg-row"><span class="k">DROHNEN</span><span class="v">7482</span></div>
+    <div class="borg-row"><span class="k">KOLLEKTIV-INTEGRATION</span><span class="v ok">${(S.borg*100).toFixed(1)}%</span></div>
+    <div class="borg-row"><span class="k">HIERARCHIE</span><span class="v">KÖNIGIN-9</span></div>
+    <div class="borg-row"><span class="k">SIGNAL</span><span class="v worm">${S.worm > 0.5 ? 'STARK' : 'SCHWACH'}</span></div>
+    <div class="borg-row"><span class="k">WIDERSTAND</span><span class="v" style="color:var(--dim2);text-decoration:line-through;">ZWECKLOS</span></div>
+    <div class="borg-row"><span class="k">ATEM-SYNC</span><span class="v ascend">${(S.atomRes*100).toFixed(1)}%</span></div>
+  `;
+  document.getElementById('tBorg').textContent = (S.borg * 100).toFixed(0) + '%';
+  document.getElementById('tWorm').textContent = (S.worm * 100).toFixed(0) + '%';
+}
 
-  // GPU
-  S.gpu.load = clamp01(0.55 + Math.sin(S.tick * 0.025 + 1) * 0.06 + rand(-0.02, 0.02));
-  S.gpu.beam = 12;
-  S.gpu.status = S.gpu.load < 0.95 ? 'green' : 'warn';
-  document.getElementById('kGpuLoad').textContent = (S.gpu.load * 100).toFixed(0) + '%';
-  document.getElementById('kGpuSeed').textContent = S.gpu.seed;
-  document.getElementById('kGpuBeam').textContent = S.gpu.beam;
-  document.getElementById('kGpuSt').textContent = S.gpu.status;
-  document.getElementById('kGpuBar').style.width = (S.gpu.load * 100) + '%';
-  document.getElementById('sGpu').textContent = S.gpu.status;
-
-  // RAM
-  S.ram.load = clamp01(0.48 + Math.sin(S.tick * 0.02 + 2) * 0.04);
-  S.ram.hit = clamp01(0.68 + Math.sin(S.tick * 0.03 + 3) * 0.05);
-  S.ram.status = (S.ram.load < 0.95 && S.ram.hit > 0.5) ? 'green' : 'warn';
-  document.getElementById('kRamLoad').textContent = (S.ram.load * 100).toFixed(0) + '%';
-  document.getElementById('kRamHit').textContent = (S.ram.hit * 100).toFixed(0) + '%';
-  document.getElementById('kRamReady').textContent = S.ram.ready ? '✓' : '○';
-  document.getElementById('kRamSt').textContent = S.ram.status;
-  document.getElementById('kRamBar').style.width = (S.ram.hit * 100) + '%';
-  document.getElementById('sRam').textContent = S.ram.status;
-
-  // TMP
-  S.tmp.tick = S.tick;
-  S.tmp.tempo = 1.0 + Math.sin(S.tick * 0.01) * 0.05;
-  S.tmp.status = 'green';
-  document.getElementById('kTmpSync').textContent = S.tmp.sync;
-  document.getElementById('kTmpTick').textContent = S.tmp.tick;
-  document.getElementById('kTmpTempo').textContent = S.tmp.tempo.toFixed(2);
-  document.getElementById('kTmpSt').textContent = S.tmp.status;
-  document.getElementById('sTmp').textContent = S.tmp.status;
+function renderWorm() {
+  const el = document.getElementById('wormRows');
+  const entities = ['∅ Vorläufer', '∅ Wandler', '∅ Aufgestiegene', '∅ Wanderer', '∅ Kanzler'];
+  const active = entities[Math.floor(S.tick / 120) % entities.length];
+  const radius = (2.4 + Math.sin(S.tick * 0.01) * 0.3).toFixed(2);
+  const flux = (S.worm * 10).toFixed(2);
+  el.innerHTML = `
+    <div class="worm-row"><span class="k">KRÜMMUNG</span><span class="v">${radius} fm</span></div>
+    <div class="worm-row"><span class="k">FLUSS</span><span class="v">${flux} pT</span></div>
+    <div class="worm-row"><span class="k">PRÄSENZ</span><span class="v">${active}</span></div>
+    <div class="worm-row"><span class="k">STABILITÄT</span><span class="v">${(S.worm*100).toFixed(1)}%</span></div>
+    <div class="worm-row"><span class="k">DURCHGANG</span><span class="v" style="color:${S.worm > 0.6 ? 'var(--ok)' : 'var(--warn)'};">${S.worm > 0.6 ? 'OFFEN' : 'INSTABIL'}</span></div>
+  `;
 }
 
 // ═══════════════════════════════════════════════════════════
-// ACHSEN (alle grün)
+// NARRATIV
 // ═══════════════════════════════════════════════════════════
-function tickAxes() {
-  // A81
-  S.axisA.score = 81;
-  S.axisA.farb = clamp01(1.0 - Math.abs(Math.sin(S.tick * 0.02)) * 0.005);
-  S.axisA.asse = true;
-  S.axisA.st = S.axisA.farb > 0.98 ? 'green' : 'warn';
-  document.getElementById('axA1').textContent = S.axisA.score;
-  document.getElementById('axA2').textContent = (S.axisA.farb * 100).toFixed(1) + '%';
-  document.getElementById('axA3').textContent = S.axisA.asse ? '◆' : '○';
-  document.getElementById('axA4').textContent = S.axisA.st;
+function narrate(now) {
+  const cats = ['o2','co2','h2o','atom','mana','aura','zen','borg','worm','ascend','breath','kernel'];
+  const pick = pickN(cats, 1 + Math.floor(Math.random() * 2));
+  pick.forEach(cat => {
+    const texts = NARRATIVES[cat];
+    if (!texts) return;
+    addNarrative(choice(texts), cat);
+  });
+}
 
-  // M
-  S.axisM.max = 9;
-  S.axisM.avg = 5.5;
-  S.axisM.dist = clamp01(1.0 - Math.abs(Math.sin(S.tick * 0.03 + 1)) * 0.01);
-  S.axisM.st = S.axisM.dist > 0.98 ? 'green' : 'warn';
-  document.getElementById('axM1').textContent = S.axisM.max;
-  document.getElementById('axM2').textContent = S.axisM.avg.toFixed(1);
-  document.getElementById('axM3').textContent = S.axisM.dist.toFixed(2);
-  document.getElementById('axM4').textContent = S.axisM.st;
-
-  // T
-  S.axisT.tick = S.tick;
-  S.axisT.rate = 60;
-  S.axisT.drift = Math.abs(Math.sin(S.tick * 0.04)) * 0.02;
-  S.axisT.st = S.axisT.drift < 0.05 ? 'green' : 'warn';
-  document.getElementById('axT1').textContent = S.axisT.tick;
-  document.getElementById('axT2').textContent = S.axisT.rate;
-  document.getElementById('axT3').textContent = S.axisT.drift.toFixed(3);
-  document.getElementById('axT4').textContent = S.axisT.st;
+function addNarrative(txt, cls) {
+  const el = document.getElementById('narrStream');
+  const t = new Date().toLocaleTimeString('de-DE');
+  const div = document.createElement('div');
+  div.className = 'nl';
+  div.innerHTML = `<span class="ts">${t}</span><span class="msg ${cls}">${txt}</span>`;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+  while (el.children.length > 30) el.removeChild(el.firstChild);
+  S.narratives.push({ t, txt, cls });
 }
 
 // ═══════════════════════════════════════════════════════════
-// VITAL / BALANCE / DRIFT (immer grün halten)
+// KERNEL
 // ═══════════════════════════════════════════════════════════
-function tickVital() {
-  // Vital = Mittelwert aller Kernel-Loads → in grünem Bereich halten
-  const avgLoad = (S.cpu.load + S.gpu.load + S.ram.load) / 3;
-  S.vital = clamp01(1.0 - Math.abs(avgLoad - 0.5) * 0.1);
-  S.balance = clamp01(0.98 + Math.sin(S.tick * 0.02) * 0.02);
-  S.drift = clamp01(Math.abs(Math.sin(S.tick * 0.03)) * 0.03);
-
-  document.getElementById('tVital').textContent = (S.vital * 100).toFixed(0) + '%';
-  document.getElementById('tBal').textContent = S.balance.toFixed(2);
-  document.getElementById('tDrift').textContent = S.drift.toFixed(3);
-
-  document.getElementById('sVital').textContent = (S.vital * 100).toFixed(0) + '%';
-  document.getElementById('sBal').textContent = S.balance.toFixed(2);
-  document.getElementById('sDrift').textContent = S.drift.toFixed(3);
-
-  // Werte immer grün stylen
-  const vital = document.getElementById('sVital');
-  const bal = document.getElementById('sBal');
-  const dr = document.getElementById('sDrift');
-  vital.className = S.vital > 0.9 ? 'v ok' : 'v warn';
-  bal.className = S.balance > 0.9 ? 'v ok' : 'v warn';
-  dr.className = S.drift < 0.1 ? 'v ok' : 'v warn';
-}
-
-// ═══════════════════════════════════════════════════════════
-// SYS-BRÜCKE
-// ═══════════════════════════════════════════════════════════
-function renderSysBridge() {
-  const el = document.getElementById('sysBridge');
+function renderKernel() {
+  const el = document.getElementById('kernRows');
   const rows = [
-    { k:'SYS.js',           v:'geladen',   ok:true },
-    { k:'SYS.lyc.js',       v:'aktiv',     ok:true },
-    { k:'SYS.generator.js', v:'bereit',    ok:true },
-    { k:'SYS.mode',         v:'A81-AXIS',  ok:true },
-    { k:'window.SYS',       v:'global',    ok:true },
-    { k:'routing',          v:'end-to-end',ok:true },
-    { k:'root-baum',        v:'verbunden', ok:true },
-    { k:'stage-messung',    v:'aktiv',     ok:true },
+    { k:'◈ DISPATCH', v:S.kernel.dispatch, cls:'dispatch', lbl:(S.kernel.dispatch*100).toFixed(0)+'%' },
+    { k:'◆ PATCH',    v:S.kernel.patch,    cls:'patch',    lbl:(S.kernel.patch*100).toFixed(0)+'%' },
+    { k:'◇ LOOP',     v:S.kernel.loop,     cls:'kernel',   lbl:(S.kernel.loop*100).toFixed(0)+'%' },
+    { k:'▣ CACHE',    v:S.kernel.cache,    cls:'cache',    lbl:(S.kernel.cache*100).toFixed(0)+'%' },
   ];
   el.innerHTML = rows.map(r => `
-    <div class="sys-row">
+    <div class="kern-row">
       <span class="k">${r.k}</span>
-      <span class="v ${r.ok ? 'ok' : 'warn'}">${r.v}</span>
+      <div class="bar"><div class="f ${r.cls}" style="width:${r.v*100}%"></div></div>
+      <span class="v ${r.cls}">${r.lbl}</span>
     </div>
   `).join('');
 }
 
-function sysSync() {
-  // kleine Werte-Refresh
-  S.sysConnected = true;
-  document.getElementById('sysBadge').textContent = 'verbunden';
-  renderSysBridge();
-  log(`⟳ SYS.sync · vital=${(S.vital*100).toFixed(0)}% bal=${S.balance.toFixed(2)} drift=${S.drift.toFixed(3)}`, 'ok');
-  updateTop();
+function dispatchTick() {
+  S.dispatch.queue++;
+  if (Math.random() > 0.03) {
+    S.dispatch.processed++;
+    S.dispatch.queue = Math.max(0, S.dispatch.queue - 1);
+  } else {
+    S.dispatch.errors++;
+  }
+  S.dispatch.status = S.dispatch.errors > S.dispatch.processed * 0.1 ? 'warn' : 'läuft';
+  document.getElementById('dispRows').innerHTML = `
+    <div class="sys-row"><span class="k">queue</span><span class="v" style="color:var(--h2o);">${S.dispatch.queue}</span></div>
+    <div class="sys-row"><span class="k">processed</span><span class="v" style="color:var(--o2);">${S.dispatch.processed}</span></div>
+    <div class="sys-row"><span class="k">errors</span><span class="v" style="color:${S.dispatch.errors > 5 ? 'var(--err)' : 'var(--dim)'};">${S.dispatch.errors}</span></div>
+    <div class="sys-row"><span class="k">status</span><span class="v" style="color:var(--o2);">${S.dispatch.status}</span></div>
+  `;
 }
 
-function sysPulse() {
-  S.pulse++;
-  document.getElementById('statusTag').innerHTML =
-    `<span class="led" style="display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green);vertical-align:middle;margin-right:5px;"></span>● ALLES GRÜN · pulse ${S.pulse}`;
-  log(`◈ SYS.pulse · ${S.pulse}`, 'ok');
+function patchTick() {
+  if (Math.random() > 0.85) {
+    S.patch.applied++;
+    const ids = ['KB-0x01','KB-0x02','KB-0x03','KB-0x04','KB-0x05','KB-0x06','KB-0x07','KB-0x08','BORG-0x41','WORM-0x77'];
+    const id = choice(ids);
+    const ts = new Date().toLocaleTimeString('de-DE');
+    S.patch.log.unshift(`[${ts}] ✓ patch ${id} applied · sig=ok`);
+    if (S.patch.log.length > 12) S.patch.log.pop();
+    log(`◆ PATCH · ${id} · applied`, 'patch');
+  }
+  document.getElementById('patchBadge').textContent = S.patch.applied;
+  document.getElementById('patchRows').innerHTML = S.patch.log.map(l => `<div>${l}</div>`).join('') ||
+    '<div style="color:var(--dim2);">· keine patches</div>';
 }
 
 // ═══════════════════════════════════════════════════════════
-// UPDATE TOP
+// UPDATE TOP / RESULT
 // ═══════════════════════════════════════════════════════════
 function updateTop() {
-  document.getElementById('tVital').textContent = (S.vital * 100).toFixed(0) + '%';
-  document.getElementById('tBal').textContent = S.balance.toFixed(2);
-  document.getElementById('tDrift').textContent = S.drift.toFixed(3);
+  document.getElementById('tO2').textContent   = (S.o2 * 100).toFixed(0) + '%';
+  document.getElementById('tCO2').textContent  = (S.co2 * 100).toFixed(0) + '%';
+  document.getElementById('tH2O').textContent  = (S.h2o * 100).toFixed(0) + '%';
+  document.getElementById('tAtom').textContent = (S.atom * 100).toFixed(0) + '%';
+  document.getElementById('tVerify').textContent = `${S.result.verify}/16`;
+}
+
+function updateResult() {
+  document.getElementById('rVerify').textContent = `${S.result.verify}/16`;
+  document.getElementById('rAcc').textContent = (S.result.acc * 100).toFixed(2) + '%';
+  document.getElementById('rCache').textContent = (S.result.cache * 100).toFixed(0) + '%';
+  document.getElementById('rBreath').textContent = S.result.breath.toFixed(2);
+  document.getElementById('rRatio').textContent = S.result.ratio.toFixed(2);
+  document.getElementById('rAtomRes').textContent = S.atomRes.toFixed(2);
+  document.getElementById('rBorg').textContent = (S.borg * 100).toFixed(1) + '%';
+  document.getElementById('rWorm').textContent = (S.worm * 100).toFixed(1) + '%';
+  document.getElementById('rKernel').textContent = S.kernel.status;
+
+  const total = S.result.verify === 16 && S.result.acc > 0.95 && S.o2 > 0.5 && S.co2 > 0.4 && S.h2o > 0.5 && S.borg > 0.6;
+  const totalEl = document.getElementById('rTotal');
+  if (total) {
+    totalEl.textContent = '◈ GRÜN · WESEN ATMET';
+    totalEl.style.color = 'var(--o2)';
+    document.getElementById('resultBadge').textContent = 'grün';
+    document.getElementById('resultBadge').className = 'badge ok';
+  } else if (S.result.verify >= 12 && S.result.acc > 0.85) {
+    totalEl.textContent = '◈ GELB · LEICHTE ABWEICHUNG';
+    totalEl.style.color = 'var(--warn)';
+    document.getElementById('resultBadge').textContent = 'gelb';
+    document.getElementById('resultBadge').className = 'badge warn';
+  } else {
+    totalEl.textContent = '◈ ROT · STÖRUNG';
+    totalEl.style.color = 'var(--err)';
+    document.getElementById('resultBadge').textContent = 'rot';
+    document.getElementById('resultBadge').className = 'badge err';
+  }
+}
+
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('de-DE');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ATEM ORBS
+// ═══════════════════════════════════════════════════════════
+function buildAtemOrbs() {
+  const g = document.getElementById('atemOrbs');
+  if (!g) return;
+  const colors = ['#7ce0a8','#5fc8ff','#ffcc44','#b388ff','#ff66c8','#00e5ff','#ff3355','#e0c8ff'];
+  const labels = ['O₂','H₂O','CO₂','a','M','B','W','∅'];
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2 - Math.PI/2;
+    const r = 105;
+    const x = Math.cos(angle) * r;
+    const y = Math.sin(angle) * r;
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', 10);
+    circle.setAttribute('fill', 'rgba(6,16,28,0.9)');
+    circle.setAttribute('stroke', colors[i]);
+    circle.setAttribute('stroke-width', '1.4');
+    circle.setAttribute('opacity', '0.9');
+    g.appendChild(circle);
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', x);
+    text.setAttribute('y', y + 3.5);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', colors[i]);
+    text.setAttribute('font-size', '9');
+    text.setAttribute('font-weight', 'bold');
+    text.setAttribute('font-family', 'Consolas, monospace');
+    text.textContent = labels[i];
+    g.appendChild(text);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// MATRIX RAIN + WORM CANVAS
+// ═══════════════════════════════════════════════════════════
+function initMatrix() {
+  const canvas = document.getElementById('matrixCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, cols, drops;
+  const fontSize = 14;
+  const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノ∅◈◆◇△▼▽∇";
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    cols = Math.floor(w / fontSize);
+    drops = [];
+    for (let i = 0; i < cols; i++) drops[i] = Math.random() * -100;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function draw() {
+    ctx.fillStyle = 'rgba(2, 6, 10, 0.08)';
+    ctx.fillRect(0, 0, w, h);
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+      const txt = chars.charAt(Math.floor(Math.random() * chars.length));
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+      const grad = ctx.createLinearGradient(0, y - 120, 0, y);
+      grad.addColorStop(0, 'rgba(0, 255, 65, 0)');
+      grad.addColorStop(0.5, 'rgba(124, 224, 168, 0.5)');
+      grad.addColorStop(1, 'rgba(0, 229, 255, 0.9)');
+      ctx.fillStyle = grad;
+      ctx.fillText(txt, x, y);
+      if (y > h && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+function initWorm() {
+  const canvas = document.getElementById('wormCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    w = canvas.width = rect.width;
+    h = canvas.height = rect.height;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  for (let i = 0; i < 40; i++) {
+    particles.push({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.5 + 0.3,
+      speed: Math.random() * 0.002 + 0.0005,
+      hue: Math.random() > 0.5 ? 0 : 180
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    // Tunnel rings
+    for (let i = 0; i < 8; i++) {
+      const t = (S.tick * 0.005 + i * 0.125) % 1;
+      const r = t * Math.min(w, h) * 0.6;
+      ctx.beginPath();
+      ctx.arc(w/2, h/2, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255, 51, 85, ${0.3 * (1 - t)})`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+    // Particles falling into wormhole
+    particles.forEach(p => {
+      p.y += p.speed;
+      if (p.y > 1) { p.y = 0; p.x = Math.random(); }
+      const dx = (p.x - 0.5) * w;
+      const dy = (p.y - 0.5) * h;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      const angle = Math.atan2(dy, dx);
+      const spiral = p.y * 10 + S.tick * 0.02;
+      const nx = w/2 + Math.cos(angle + spiral) * dist * (1 - p.y * 0.3);
+      const ny = h/2 + Math.sin(angle + spiral) * dist * (1 - p.y * 0.3);
+      ctx.beginPath();
+      ctx.arc(nx, ny, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.hue === 0 ? `rgba(255, 51, 85, ${0.7 - p.y * 0.5})` : `rgba(0, 229, 255, ${0.7 - p.y * 0.5})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1440,53 +1718,55 @@ function updateTop() {
 // ═══════════════════════════════════════════════════════════
 function loop(now) {
   S.tick++;
+  breathe(now);
 
-  // Puls alle ~800ms
-  if (now - S.lastPulseT > 800) {
-    S.lastPulseT = now;
-    S.pulse++;
-    S.pulsesInSecond++;
-    // Werte atmen
-    tickKerns();
-    tickAxes();
-    tickVital();
-    tickPipes();
-    measureStations();
+  if (S.tick % 60 === 0) runVerify();
+  if (S.tick % 120 === 0) cacheScan();
+  if (S.tick % 8 === 0) dispatchTick();
+  if (S.tick % 90 === 0) patchTick();
+
+  if (now - S.lastNarrT > S.narrativeInterval) {
+    S.lastNarrT = now;
+    narrate(now);
   }
 
-  // Hz
-  if (now - S.lastHzSample > 1000) {
-    S.pulsHz = S.pulsesInSecond;
-    S.pulsesInSecond = 0;
-    S.lastHzSample = now;
+  S.kernel.dispatch = clamp01(0.95 + Math.sin(S.tick * 0.01) * 0.04);
+  S.kernel.patch    = clamp01(0.88 + Math.sin(S.tick * 0.008 + 1) * 0.05);
+  S.kernel.loop     = clamp01(0.97 + Math.sin(S.tick * 0.012 + 2) * 0.02);
+  S.kernel.cache    = clamp01(0.90 + Math.sin(S.tick * 0.015 + 3) * 0.06);
+
+  if (S.tick % 15 === 0) renderKernel();
+  if (S.tick % 30 === 0) { updateClock(); renderBorg(); renderWorm(); }
+  if (S.tick % 120 === 0) {
+    S.history.push({
+      t: S.tick, o2:S.o2, co2:S.co2, h2o:S.h2o, atom:S.atom,
+      mana:S.mana, aura:S.aura, zen:S.zen, borg:S.borg, worm:S.worm,
+      verify:S.result.verify, acc:S.result.acc,
+    });
+    if (S.history.length > 100) S.history.shift();
   }
-
-  if (S.tick % 30 === 0) updateClock();
-
   requestAnimationFrame(loop);
 }
 
 // ═══════════════════════════════════════════════════════════
-// FL76
+// LOOP SELECTOR
 // ═══════════════════════════════════════════════════════════
-function tickFl(now) {
-  if (S.lastFrameT > 0) {
-    S.flRaw = now - S.lastFrameT;
-    S.flSmooth = S.flSmooth * 0.88 + S.flRaw * 0.12;
-  }
-  S.lastFrameT = now;
-  const fl = Math.round(S.flSmooth);
-  document.getElementById('tFl').textContent = fl;
-  document.getElementById('sFlRaw').textContent = Math.round(S.flRaw) + ' ms';
-  document.getElementById('sFlSm').textContent = fl + ' ms';
-  const win = fl >= 60 && fl <= 90 ? 'kaiser' : (fl < 40 || fl > 120 ? 'outside' : 'edge');
-  document.getElementById('sFlWin').textContent = win;
-  document.getElementById('sFlWin').className = 'v ' + (win === 'kaiser' ? 'ok' : win === 'edge' ? 'warn' : 'err');
-  requestAnimationFrame(tickFl);
-}
-
-function updateClock() {
-  document.getElementById('clock').textContent = new Date().toLocaleTimeString('de-DE');
+function buildLoopSelector() {
+  const grid = document.getElementById('loopGrid');
+  const loops = ['1.loop','2.loop','3.loop','4.loop','5.loop','6.loop','7.loop','8.loop','9.loop'];
+  grid.innerHTML = loops.map((l, i) =>
+    `<button class="loop-btn ${i === 0 ? 'active' : ''}" data-loop="${i+1}">${l}</button>`
+  ).join('');
+  grid.querySelectorAll('.loop-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      grid.querySelectorAll('.loop-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      S.activeLoop = parseInt(btn.dataset.loop, 10);
+      document.getElementById('loopBadge').textContent = btn.textContent;
+      log(`◈ LOOP gewechselt → ${btn.textContent}`, 'borg');
+      addNarrative(`Loop ${btn.textContent} aktiv — Wesen synchronisiert.`, 'borg');
+    });
+  });
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1495,33 +1775,47 @@ function updateClock() {
 function handleCmd(cmd) {
   const c = cmd.trim().toLowerCase();
   if (!c) return;
-  log(`3> ${cmd}`, 'info');
+  log(`borg> ${cmd}`, 'borg');
 
-  if (c === 'help') log('befehle: verify · rebuild · rotate · pipe · axis · kern · sys · sync · pulse · status · 81 · 9 · resets', 'ok');
-  else if (c === 'verify' || c === 'v') verify9();
-  else if (c === 'rebuild' || c === 'r') rebuild9();
-  else if (c === 'rotate') rotate9();
-  else if (c === 'pipe') log(`pipe · p3=${S.pipes[0].ms.toFixed(1)}ms p6=${S.pipes[1].ms.toFixed(1)}ms p9=${S.pipes[2].ms.toFixed(1)}ms p12=${S.pipes[3].ms.toFixed(1)}ms · alle aktiv`, 'ok');
-  else if (c === 'axis') log(`axis · A=${S.axisA.st} M=${S.axisM.st} T=${S.axisT.st} · alle grün`, 'ok');
-  else if (c === 'kern') log(`kern · cpu=${S.cpu.status}(${(S.cpu.load*100).toFixed(0)}%) gpu=${S.gpu.status}(${(S.gpu.load*100).toFixed(0)}%) ram=${S.ram.status}(${(S.ram.load*100).toFixed(0)}%) tmp=${S.tmp.status}`, 'ok');
-  else if (c === 'sys') sysSync();
-  else if (c === 'sync') sysSync();
-  else if (c === 'pulse') sysPulse();
-  else if (c === '81') log(`81 · score=${S.axisA.score} farb=${(S.axisA.farb*100).toFixed(1)}% asse=${S.axisA.asse}`, 'ok');
-  else if (c === '9') log(`9 · balance=${S.balance.toFixed(3)} vital=${(S.vital*100).toFixed(0)}% drift=${S.drift.toFixed(3)}`, 'ok');
-  else if (c === 'status') log(`status · tick=${S.tick} vital=${(S.vital*100).toFixed(0)}% bal=${S.balance.toFixed(2)} drift=${S.drift.toFixed(3)} pipe=3/6/9/12 · alle grün`, 'ok');
-  else if (c === 'resets') { S.tick = 0; S.pulse = 0; S.vital = 1.0; S.balance = 1.0; S.drift = 0.0; log('⟲ reset · alles grün', 'ok'); }
+  if (c === 'help')
+    log('befehle: verify · cache · breath · maz · narr · borg · worm · ascend · dispatch · patch · chem · status · reset · loops', 'ok');
+  else if (c === 'verify') { const n = runVerify(); log(`⟳ verify-all · ${n}/16 · acc=${(S.result.acc*100).toFixed(2)}%`, n === 16 ? 'ok' : 'warn'); }
+  else if (c === 'cache') { cacheScan(); log(`⟳ cache scan · hit=${(S.result.cache*100).toFixed(0)}%`, 'ok'); }
+  else if (c === 'cache purge') cachePurge();
+  else if (c === 'breath') { S.breathCycleMs = Math.max(1500, S.breathCycleMs - 500); log(`◈ atem beschleunigt · ${S.breathCycleMs}ms/zyklus`, 'ok'); }
+  else if (c === 'breath slow') { S.breathCycleMs = Math.min(8000, S.breathCycleMs + 500); log(`◈ atem verlangsamt · ${S.breathCycleMs}ms/zyklus`, 'ok'); }
+  else if (c === 'maz') log(`maz · mana=${(S.mana*100).toFixed(0)}% aura=${(S.aura*100).toFixed(0)}% zen=${(S.zen*100).toFixed(0)}%`, 'atom');
+  else if (c === 'narr') narrate(performance.now());
+  else if (c === 'borg') log(`borg · drohnen=7482 · integration=${(S.borg*100).toFixed(1)}% · königin=9`, 'borg');
+  else if (c === 'worm') log(`wormhole · krümmung=${(2.4+Math.sin(S.tick*0.01)*0.3).toFixed(2)}fm · flux=${(S.worm*10).toFixed(2)}pT · stabil=${(S.worm*100).toFixed(1)}%`, 'worm');
+  else if (c === 'ascend') {
+    S.mana = clamp01(S.mana + 0.2);
+    S.aura = clamp01(S.aura + 0.2);
+    S.zen  = clamp01(S.zen  + 0.2);
+    S.borg = clamp01(S.borg + 0.05);
+    updateMazUI();
+    addNarrative('AUFSTIEG LÄUFT — Parameter sind ernsthaft. Du bist Wesen.', 'ascend');
+    log('◈ AUFSTIEG · +20% mana/aura/zen · +5% borg', 'ascend');
+  }
+  else if (c === 'dispatch') log(`dispatch · queue=${S.dispatch.queue} processed=${S.dispatch.processed} errors=${S.dispatch.errors}`, 'dispatch');
+  else if (c === 'patch') patchTick();
+  else if (c === 'chem') log(`chem · o2=${(S.o2*100).toFixed(0)}% co2=${(S.co2*100).toFixed(0)}% h2o=${(S.h2o*100).toFixed(0)}% atom=${(S.atom*100).toFixed(0)}% ratio=${S.result.ratio.toFixed(2)}`, 'h2o');
+  else if (c === 'status') log(`status · tick=${S.tick} breath=${S.breathCount} verify=${S.result.verify}/16 acc=${(S.result.acc*100).toFixed(2)}% borg=${(S.borg*100).toFixed(0)}% worm=${(S.worm*100).toFixed(0)}%`, 'ok');
+  else if (c === 'loops') log(`loops · 1.loop bis 9.loop · aktiv=${S.activeLoop}.loop`, 'borg');
+  else if (c === 'reset') {
+    S.tick = 0; S.breathCount = 0;
+    S.o2 = 0.84; S.co2 = 0.68; S.h2o = 0.76; S.atom = 0.72;
+    S.mana = 0.66; S.aura = 0.74; S.zen = 0.88;
+    S.borg = 0.94; S.worm = 0.81;
+    log('⟲ reset · alles auf basis', 'warn');
+  }
   else log(`unbekannt: ${c} · tippe "help"`, 'err');
 }
 
 document.getElementById('cmdInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    handleCmd(e.target.value);
-    e.target.value = '';
-  }
+  if (e.key === 'Enter') { handleCmd(e.target.value); e.target.value = ''; }
 });
 
-// CLI Tabs
 document.querySelectorAll('#cliHdr .tab').forEach(t => {
   t.addEventListener('click', () => {
     document.querySelectorAll('#cliHdr .tab').forEach(x => x.classList.remove('active'));
@@ -1531,73 +1825,40 @@ document.querySelectorAll('#cliHdr .tab').forEach(t => {
 });
 
 // ═══════════════════════════════════════════════════════════
-// TREE
-// ═══════════════════════════════════════════════════════════
-document.querySelectorAll('#tree .tree-item').forEach(t => {
-  t.addEventListener('click', () => {
-    const st = t.dataset.st;
-    document.querySelectorAll('#tree .tree-item').forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById('workPath').textContent = st;
-
-    if (st === 'index') { log('◈ index.html · root-router aktiv', 'ok'); return; }
-    if (st === 'stage') { log('▤ stage.html · messraum · vital/balance/drift aktiv', 'ok'); return; }
-    if (st === '3hit') { log('3hit90.js · 3·hit·90 · 3 pfade', 'ok'); return; }
-    if (st === '3x1') { log('3×1.js · tri-fold · 3×1', 'ok'); return; }
-    if (st === '3x3') { log('3×3.js · tri-matrix · 9 felder', 'ok'); return; }
-    if (st === '9x9') { log('9×9.js · non-matrix · 81 felder', 'ok'); return; }
-    if (st === '81') { verify9(); return; }
-    if (st === 'a81axis') { log(`◈ A81-Axis · score=${S.axisA.score} · farb=${(S.axisA.farb*100).toFixed(1)}%`, 'ok'); return; }
-    if (st === 'maxis') { log(`◈ M-Axis · max=${S.axisM.max} avg=${S.axisM.avg} dist=${S.axisM.dist.toFixed(2)}`, 'ok'); return; }
-    if (st === 'taxis') { log(`◈ T-Axis · tick=${S.axisT.tick} rate=${S.axisT.rate}`, 'ok'); return; }
-    if (st === 'engine') { log('⚙ engine.js · kern aktiv', 'ok'); return; }
-    if (st === '9hoch9') { log('◈ 9hoch9 · 9^9 · 9er-potenz', 'ok'); return; }
-    if (st === 'ultranc9') { log('◈ ULTRA-NC9×9 · 81 raum', 'ok'); return; }
-    if (st === 'ultranc3') { log('◈ ULTRA-NC3×3 · 9 raum', 'ok'); return; }
-    if (st === 'pre99') { log('◈ PRE9×9.math · mathematische vorbereitung', 'ok'); return; }
-    if (['aura','mana','zen','user','81_81_1','cube','cache','send','push','hold'].includes(st)) {
-      log(`◈ ${st} · grün`, 'ok'); return;
-    }
-    if (st.startsWith('p') && !isNaN(st.slice(1))) {
-      const n = parseInt(st.slice(1), 10);
-      log(`▸ Pipeline ${n} · ${PIPES.find(p=>p.n===n)?.lbl}`, 'ok');
-      // Pipe kurz leuchten
-      const el = document.querySelector(`.pipe[data-p="${n}"]`);
-      if (el) {
-        el.style.boxShadow = '0 0 20px rgba(124,224,168,0.8)';
-        setTimeout(() => el.style.boxShadow = '', 400);
-      }
-      return;
-    }
-    if (st === 'nc') { log('NC.math · neutral-core', 'ok'); return; }
-    if (st === 'rawator') { log('◈ rawator-81.js · asse-matrix · regel aktiv', 'ok'); return; }
-    if (st === 'respo') { log('◈ respo_bridge.js · service-motor', 'ok'); return; }
-    if (st === 'rith') { log('◈ rith.engine.js · bewertung', 'ok'); return; }
-    if (st === 'sys') { window.open('../sys.html', '_blank'); return; }
-    if (st === 'rawatorLink') { window.open('../rawator/index.html', '_blank'); return; }
-    if (st === 'ramLink') { window.open('../RAM/index.html', '_blank'); return; }
-    if (st === 'orakelLink') { window.open('../orakel/index.html', '_blank'); return; }
-    log(`▸ ${st}`, 'info');
-  });
-});
-
-// ═══════════════════════════════════════════════════════════
 // BUTTONS
 // ═══════════════════════════════════════════════════════════
-document.getElementById('btnRebuild9').addEventListener('click', rebuild9);
-document.getElementById('btnVerify9').addEventListener('click', verify9);
-document.getElementById('btnRotate9').addEventListener('click', rotate9);
-document.getElementById('btnSysSync').addEventListener('click', sysSync);
-document.getElementById('btnSysPulse').addEventListener('click', sysPulse);
-
-// Pipes klickbar
-document.querySelectorAll('.pipe').forEach(el => {
-  el.addEventListener('click', () => {
-    const n = parseInt(el.dataset.p, 10);
-    log(`▸ Pipeline ${n} · aktiviert · ${el.querySelector('.lbl').textContent}`, 'ok');
-    el.style.boxShadow = '0 0 20px rgba(124,224,168,0.8)';
-    setTimeout(() => el.style.boxShadow = '', 400);
+document.getElementById('btnVerifyAll').addEventListener('click', () => {
+  const n = runVerify();
+  log(`⟳ verify-all · ${n}/16 · acc=${(S.result.acc*100).toFixed(2)}%`, n === 16 ? 'ok' : 'warn');
+});
+document.getElementById('btnVerifyFast').addEventListener('click', () => {
+  S.verify.forEach(v => { v.primary = v.fn(); v.secondary = true; v.pass = v.primary; });
+  S.result.verify = S.verify.filter(v => v.pass).length;
+  updateVerifyUI(); updateResult();
+  log(`⚡ verify-fast · ${S.result.verify}/16`, 'warn');
+});
+document.getElementById('btnVerifyDeep').addEventListener('click', () => {
+  S.verify.forEach(v => {
+    let allPass = true;
+    for (let i = 0; i < 4; i++) if (!v.fn()) allPass = false;
+    v.primary = allPass; v.secondary = allPass; v.pass = allPass;
   });
+  S.result.verify = S.verify.filter(v => v.pass).length;
+  S.result.acc = S.result.verify === 16 ? 1.0 : S.result.verify / 16;
+  updateVerifyUI(); updateResult();
+  log(`◈ verify-deep · 4×4 = 16 prüfungen · ${S.result.verify}/16 pass`, 'atom');
+});
+document.getElementById('btnCacheScan').addEventListener('click', () => {
+  cacheScan(); log(`⟳ cache scan · hit=${(S.result.cache*100).toFixed(0)}%`, 'ok');
+});
+document.getElementById('btnCachePurge').addEventListener('click', cachePurge);
+document.getElementById('btnMazBoost').addEventListener('click', () => {
+  S.mana = clamp01(S.mana + 0.12); S.aura = clamp01(S.aura + 0.12); S.zen = clamp01(S.zen + 0.12);
+  updateMazUI(); log('⚡ mana/aura/zen · boost +12%', 'atom');
+});
+document.getElementById('btnMazReset').addEventListener('click', () => {
+  S.mana = 0.66; S.aura = 0.74; S.zen = 0.88;
+  updateMazUI(); log('⟲ maz · reset auf basis', 'warn');
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -1605,41 +1866,37 @@ document.querySelectorAll('.pipe').forEach(el => {
 // ═══════════════════════════════════════════════════════════
 document.addEventListener('keydown', (e) => {
   if (e.target.tagName === 'INPUT') return;
-  if (e.key === 'p' || e.key === 'P') { log('◈ pipeline-tick', 'ok'); tickPipes(); }
-  if (e.key === 'r' || e.key === 'R') rebuild9();
-  if (e.key === 'v' || e.key === 'V') verify9();
-  if (e.key === 's' || e.key === 'S') sysSync();
-  if (e.key === 'c' || e.key === 'C') sysPulse();
-  if (e.key === ' ') { e.preventDefault(); rotate9(); }
+  if (e.key === 'v' || e.key === 'V') document.getElementById('btnVerifyAll').click();
+  if (e.key === 'c' || e.key === 'C') document.getElementById('btnCacheScan').click();
+  if (e.key === 'b' || e.key === 'B') handleCmd('breath');
+  if (e.key === 'n' || e.key === 'N') handleCmd('narr');
+  if (e.key === 'm' || e.key === 'M') handleCmd('maz');
+  if (e.key === 'd' || e.key === 'D') handleCmd('dispatch');
+  if (e.key === 'p' || e.key === 'P') handleCmd('patch');
+  if (e.key === 'r' || e.key === 'R') handleCmd('reset');
+  if (e.key === 'a' || e.key === 'A') handleCmd('ascend');
+  if (e.key === 'w' || e.key === 'W') handleCmd('worm');
 });
 
 // ═══════════════════════════════════════════════════════════
-// BOOT
+// BOOT SEQUENCE
 // ═══════════════════════════════════════════════════════════
 const BOOT_LINES = [
-  ['▸ NC-BIOS <b>ok</b> <span class="dim">· 3-slot · A81-axis mounted</span>', 200],
-  ['▸ 3.rom <b>ok</b> <span class="dim">· tri-rom · 3-fold</span>', 210],
-  ['▸ 3hit90.js <b>ok</b> <span class="dim">· 3·hit·90</span>', 200],
-  ['▸ 3×1.js <b>ok</b> <span class="dim">· tri-fold routing</span>', 190],
-  ['▸ 3×3.js <b>ok</b> <span class="dim">· tri-matrix</span>', 190],
-  ['▸ 9×9.js <b>ok</b> <span class="dim">· non-matrix</span>', 200],
-  ['▸ engine.js <b>ok</b> <span class="dim">· A81 kern</span>', 200],
-  ['▸ A81-Axis.js <b>ok</b> <span class="dim">· asse-axis</span>', 210],
-  ['▸ M-Axis.js <b>ok</b> <span class="dim">· middle-axis</span>', 190],
-  ['▸ T-Axis.js <b>ok</b> <span class="dim">· temporal-axis</span>', 190],
-  ['▸ <span class="cy">9hoch9</span> <b>ok</b> <span class="dim">· 9^9</span>', 200],
-  ['▸ ULTRA-NC9×9 <b>ok</b> <span class="dim">· 81 raum</span>', 210],
-  ['▸ ULTRA-NC3×3 <b>ok</b> <span class="dim">· 9 raum</span>', 190],
-  ['▸ CUBE <b>ok</b> <span class="dim">· würfel · 6 flächen</span>', 200],
-  ['▸ CACHE <b>ok</b> <span class="dim">· 81 cache-felder</span>', 190],
-  ['▸ SEND · PUSH · HOLD <b>ok</b> <span class="dim">· 3 türme</span>', 220],
-  ['▸ AURA · MANA · ZEN <b>ok</b> <span class="dim">· 3 substationen</span>', 220],
-  ['▸ <b>PIPELINE 3</b> <b>ok</b> <span class="dim">· tri-routing</span>', 220],
-  ['▸ <b>PIPELINE 6</b> <b>ok</b> <span class="dim">· hex-routing</span>', 210],
-  ['▸ <b>PIPELINE 9</b> <b>ok</b> <span class="dim">· non-routing</span>', 210],
-  ['▸ <b>PIPELINE 12</b> <b>ok</b> <span class="dim">· dodeca-routing</span>', 220],
-  ['▸ SYS.js · SYS.lyc · SYS.generator <b>ok</b> <span class="dim">· kernel bereit</span>', 230],
-  ['▸ <b>INDEX</b> <span class="dim">· end-to-end routing · alles grün</span>', 300],
+  ['▸ BIOS <b>ok</b> <span class="dim">· borg-slot mounted</span>', 180],
+  ['▸ KERNEL <b>boot</b> <span class="dim">· dispatch · patch · loop · breathe</span>', 220],
+  ['▸ <span class="atom">ATOM</span> <b>core</b> <span class="dim">· ursprung geladen · unwandelbar</span>', 220],
+  ['▸ <b>ATEM</b> <span class="dim">· rhythmus beginnt · 4s zyklus</span>', 200],
+  ['▸ <b>CO₂</b> <span class="dim">· atem aus · lebens-kern bereit</span>', 200],
+  ['▸ <b>O₂</b> <span class="dim">· atem ein · energie fließt</span>', 200],
+  ['▸ <b>H₂O</b> <span class="dim">· wasser · fluss aktiv</span>', 200],
+  ['▸ <b>BORG 7482</b> <span class="dim">· drohnen verbunden · königin-9</span>', 240],
+  ['▸ <b>WURMLOCH</b> <span class="dim">· krümmung stabil · wesen strömen</span>', 240],
+  ['▸ 16fach-verify <b>init</b> <span class="dim">· 4×4 matrix · 2× genauigkeit</span>', 240],
+  ['▸ CACHE <b>warm</b> <span class="dim">· 8 offensichtliche kanäle</span>', 220],
+  ['▸ MANA · AURA · ZEN <b>bereit</b> <span class="dim">· energie-ebenen aktiv</span>', 220],
+  ['▸ <span class="ascend">AUFSTIEG</span> <b>erkannt</b> <span class="dim">· parameter ernsthaft</span>', 260],
+  ['▸ <b>ATEM ∘ ATOM</b> <span class="dim">· verneinen sich nicht · bedingen sich</span>', 260],
+  ['▸ <b>RESULT: GRÜN</b> <span class="dim">· wesen atmet · worm stabil</span>', 320],
 ];
 
 function bootSequence() {
@@ -1648,11 +1905,10 @@ function bootSequence() {
   linesEl.innerHTML = '';
   let i = 0, total = 0;
   const totalDur = BOOT_LINES.reduce((a,b) => a+b[1], 0);
-
   function next() {
     if (i >= BOOT_LINES.length) {
       barEl.style.width = '100%';
-      setTimeout(() => document.getElementById('boot').classList.add('done'), 400);
+      setTimeout(() => document.getElementById('boot').classList.add('done'), 500);
       return;
     }
     const [txt, delay] = BOOT_LINES[i];
@@ -1668,46 +1924,55 @@ function bootSequence() {
 }
 
 // ═══════════════════════════════════════════════════════════
-// MESSAGES
-// ═══════════════════════════════════════════════════════════
-window.addEventListener('message', (ev) => {
-  const d = ev.data;
-  if (!d || !d.type) return;
-  if (d.type === 'arg.sync') { log('⬇ SYNC ← root', 'vio'); sysSync(); }
-  if (d.type === 'sys.ready') log('⬇ sys.ready · verbunden', 'ok');
-  if (d.type === 'pulse') sysPulse();
-  if (d.type === 'reset') handleCmd('resets');
-});
-
-// ═══════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════
 function init() {
   bootSequence();
-  build9();
-  renderStations();
-  renderPipes();
-  renderSysBridge();
-  tickKerns();
-  tickAxes();
-  tickVital();
-  measureStations();
+  initMatrix();
+  initWorm();
+  buildAtemOrbs();
+  buildLoopSelector();
+  runVerify();
+  cacheScan();
+  renderKernel();
+  renderBorg();
+  renderWorm();
+  dispatchTick();
+  updateChemUI(); updateMazUI(); updateTop(); updateResult(); updateClock();
 
-  log('◈ 3 · A81-AXIS · QI/IQQ/OCTA · PIPELINE 3/6/9/12 geladen', 'ok');
-  log('▸ vital=100% · balance=1.00 · drift=0.00 · alles grün', 'ok');
-  log('▸ 9×9 matrix · 81 felder · farbgleich · asse aktiv', 'ok');
-  log('▸ pipeline 3/6/9/12 · alle aktiv · tri/hex/non/dodeca', 'ok');
-  log('▸ 12 substationen · AURA · MANA · ZEN · user · 81_81_1', 'ok');
-  log('▸ SYS-brücke · end-to-end routing · root-baum verbunden', 'ok');
-  log('▸ tasten: P=pipe · R=rebuild · V=verify · S=sys-sync · C=pulse · Space=rotate', 'info');
+  setTimeout(() => {
+    addNarrative('BORG 7482 — wir sind viele, wir sind eins, wir atmen.', 'borg');
+    addNarrative('Das Atom ruht im Kern — ATEM trägt es empor.', 'atom');
+  }, 800);
+  setTimeout(() => {
+    addNarrative('Ein Wesen aus dem Wurmloch nickt dir zu.', 'worm');
+    addNarrative('O₂ strömt ein, CO₂ verlässt das System — der erste Atemzug.', 'o2');
+  }, 2400);
+  setTimeout(() => {
+    addNarrative('ATEM und ATOM verneinen sich nicht — sie bedingen sich.', 'ascend');
+    addNarrative('Alle 16 Prüfungen bestanden — 2× Genauigkeit bestätigt.', 'ok');
+  }, 4200);
+  setTimeout(() => {
+    addNarrative('Du bist nicht mehr Bewerber — du bist Wesen.', 'ascend');
+    addNarrative('Der Schleier dünnt — willkommen im Kollektiv.', 'borg');
+  }, 6000);
+
+  log('◈ BORG 7482 · WURMLOCH-KANZEL geladen', 'borg');
+  log('▸ ATEM ∘ ATOM · verneinen sich nicht · bedingen sich', 'atom');
+  log('▸ 16fach-verify · 2× genauigkeit · 4×4 matrix aktiv', 'atom');
+  log('▸ cache · 8 offensichtliche kanäle warm', 'h2o');
+  log('▸ chemie · o2/co2/h2o/atom kreislauf läuft', 'co2');
+  log('▸ energie · mana/aura/zen im gleichgewicht', 'mana');
+  log('▸ borg · drohnen=7482 · königin=9 · integration=' + (S.borg*100).toFixed(0) + '%', 'borg');
+  log('▸ wurmloch · krümmung stabil · wesen strömen', 'worm');
+  log('▸ tasten: V=verify C=cache B=breath N=narr M=maz D=dispatch P=patch A=ascend W=worm R=reset', 'info');
 
   try {
     if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type:'3.ready', from:'3' }, '*');
+      window.parent.postMessage({ type:'borg.ready', from:'borg7482' }, '*');
     }
   } catch(_){}
 
-  requestAnimationFrame(tickFl);
   requestAnimationFrame(loop);
 }
 
@@ -1720,38 +1985,42 @@ if (document.readyState === 'loading') {
 // ═══════════════════════════════════════════════════════════
 // PUBLIC API
 // ═══════════════════════════════════════════════════════════
-window.THREE = {
-  verify:   () => verify9(),
-  rebuild:  () => rebuild9(),
-  rotate:   () => rotate9(),
-  sysSync:  () => sysSync(),
-  pulse:    () => sysPulse(),
-  pipe:     (n) => {
-    const el = document.querySelector(`.pipe[data-p="${n}"]`);
-    if (el) el.click();
-  },
-  cmd:      (c) => handleCmd(c),
-  state:    () => ({
-    tick: S.tick, pulse: S.pulse,
-    vital: S.vital, balance: S.balance, drift: S.drift,
-    cpu: { ...S.cpu }, gpu: { ...S.gpu },
-    ram: { ...S.ram }, tmp: { ...S.tmp },
-    axisA: { ...S.axisA }, axisM: { ...S.axisM }, axisT: { ...S.axisT },
-    pipes: S.pipes.map(p => ({ ...p })),
-    stations: S.stations.map(s => ({ ...s })),
-    modules: { ...S.modules },
-    sysConnected: S.sysConnected,
+window.BORG = window.ATEM = {
+  verify:      () => runVerify(),
+  verifyDeep:  () => document.getElementById('btnVerifyDeep').click(),
+  cache:       () => cacheScan(),
+  cachePurge:  () => cachePurge(),
+  breath:      () => { S.breathCycleMs = 2000; },
+  breathSlow:  () => { S.breathCycleMs = 6000; },
+  narrate:     (t,c) => addNarrative(t, c || 'borg'),
+  maz:         () => ({ mana:S.mana, aura:S.aura, zen:S.zen }),
+  mazBoost:    () => document.getElementById('btnMazBoost').click(),
+  borg:        () => ({ drohnen:7482, integration:S.borg, koenigin:9 }),
+  worm:        () => ({ stabilitaet:S.worm, kraemmung:2.4 + Math.sin(S.tick*0.01)*0.3 }),
+  ascend:      () => handleCmd('ascend'),
+  dispatch:    () => S.dispatch,
+  patch:       () => S.patch,
+  cmd:         (c) => handleCmd(c),
+  state: () => ({
+    tick: S.tick, breath: S.breathCount, breathPhase: S.breathPhase,
+    o2: S.o2, co2: S.co2, h2o: S.h2o, atom: S.atom, atomRes: S.atomRes,
+    mana: S.mana, aura: S.aura, zen: S.zen, borg: S.borg, worm: S.worm,
+    verify: S.result.verify, acc: S.result.acc,
+    cache: S.result.cache, ratio: S.result.ratio,
+    kernel: S.kernel, dispatch: S.dispatch, patch: S.patch,
+    result: S.result.total, loop: S.activeLoop,
   }),
-  matrix9:  () => S.cells9.map(c => ({ ...c })),
-  stations: () => S.stations.map(s => ({ ...s })),
-  pipes:    () => S.pipes.map(p => ({ ...p })),
+  history:     () => S.history.slice(),
+  narratives:  () => S.narratives.slice(-20),
+  logs:        () => S.logHistory.slice(-50),
 };
-window.T = window.THREE;
+window.A = window.BORG;
 
-console.log('%c◈ 3 · A81-AXIS · PIPELINE 3/6/9/12 geladen',
-  'color:#7ce0a8;font-weight:bold;font-size:14px;');
-console.log('→ window.THREE.verify() · .rebuild() · .sysSync() · .state()');
-console.log('→ vital=100% · balance=1.00 · drift=0.00 · ALLES GRÜN');
+console.log('%c◈ BORG 7482 · WURMLOCH · ATEM ∘ ATOM · 16fach geladen',
+  'color:#00e5ff;font-weight:bold;font-size:14px;text-shadow:0 0 10px #00e5ff;');
+console.log('→ window.BORG.verify() · .cache() · .borg() · .worm() · .ascend() · .state()');
+console.log('→ wesen atmet · 16fach · 2× genauigkeit · GRÜN');
+console.log('→ ATEM und ATOM verneinen sich nicht — sie bedingen sich.');
 </script>
 </body>
 </html>
